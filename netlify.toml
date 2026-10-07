@@ -1,5 +1,5 @@
-# Netlify demo deployment: React app as static files + the Express API as one serverless function.
 [build]
+  base = "skillsetu"
   command = "npm --prefix frontend ci && npm --prefix frontend run build && npm --prefix backend ci --omit=dev --ignore-scripts"
   publish = "frontend/dist"
   functions = "backend/netlify/functions"
