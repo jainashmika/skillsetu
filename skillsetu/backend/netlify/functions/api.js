@@ -15,7 +15,6 @@ const { one } = require('../../src/db');
 
 if (!one("SELECT 1 FROM users WHERE role='admin'")) {
   require('../../src/db/seed').seed();
-  require('../../src/services/settings').set('maintenance_banner', 'Demo site: sample data resets from time to time, so changes you make may not be kept.');
 }
 try { require('../../src/services/jobs').expireDue(); } catch { /* ignore */ }
 
