@@ -1,0 +1,13 @@
+{
+  "name": "skillsetu",
+  "private": true,
+  "description": "SkillSetu - AI-Driven Job Matching Platform",
+  "scripts": {
+    "install:all": "npm --prefix backend install && npm --prefix frontend install",
+    "dev:api": "npm --prefix backend run dev",
+    "dev:web": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build",
+    "start": "npm --prefix backend start",
+    "test": "npm --prefix backend test"
+  }
+}

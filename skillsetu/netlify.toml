@@ -1,0 +1,35 @@
+# Netlify demo deployment: React app as static files + the Express API as one serverless function.
+[build]
+  command = "npm --prefix frontend ci && npm --prefix frontend run build && npm --prefix backend ci --omit=dev --ignore-scripts"
+  publish = "frontend/dist"
+  functions = "backend/netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+  AWS_LAMBDA_JS_RUNTIME = "nodejs22.x"
+
+[functions]
+  node_bundler = "zisi"
+  external_node_modules = ["better-sqlite3"]
+  included_files = [
+    "backend/src/db/schema.sql",
+    "backend/node_modules/swagger-ui-dist/**",
+    "backend/node_modules/pdfkit/js/data/**",
+  ]
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/uploads/*"
+  to = "/.netlify/functions/api/uploads/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
