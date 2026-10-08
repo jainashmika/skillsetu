@@ -29,10 +29,10 @@ const QUALIFICATIONS = [
   [/\b10th\b|\bsslc\b|\bssc\b|matriculation|secondary school/i, 1, '10th'],
 ];
 
-function skills() {
+async function skills() {
   let s = cache.get('skills');
   if (!s) {
-    s = all('SELECT id, name, category, synonyms FROM skills ORDER BY name').map((r) => ({ ...r, synonyms: json(r.synonyms, []) }));
+    s = (await all('SELECT id, name, category, synonyms FROM skills ORDER BY name')).map((r) => ({ ...r, synonyms: json(r.synonyms, []) }));
     cache.set('skills', s);
   }
   return s;
@@ -52,9 +52,9 @@ function resolveSkill(nameOrId) {
   if (typeof nameOrId === 'number' || /^\d+$/.test(String(nameOrId))) return skillById(nameOrId);
   return aliasIndex().get(String(nameOrId).trim().toLowerCase());
 }
-function sectors() { let v = cache.get('sectors'); if (!v) { v = all('SELECT * FROM sectors ORDER BY name'); cache.set('sectors', v); } return v; }
-function occupations() { let v = cache.get('occ'); if (!v) { v = all('SELECT * FROM occupations ORDER BY title').map((o) => ({ ...o, skill_ids: json(o.skill_ids, []) })); cache.set('occ', v); } return v; }
-function trainings() { let v = cache.get('tr'); if (!v) { v = all('SELECT * FROM trainings').map((t) => ({ ...t, skill_ids: json(t.skill_ids, []) })); cache.set('tr', v); } return v; }
+async function sectors() { let v = cache.get('sectors'); if (!v) { v = await all('SELECT * FROM sectors ORDER BY name'); cache.set('sectors', v); } return v; }
+async function occupations() { let v = cache.get('occ'); if (!v) { v = (await all('SELECT * FROM occupations ORDER BY title')).map((o) => ({ ...o, skill_ids: json(o.skill_ids, []) })); cache.set('occ', v); } return v; }
+async function trainings() { let v = cache.get('tr'); if (!v) { v = (await all('SELECT * FROM trainings')).map((t) => ({ ...t, skill_ids: json(t.skill_ids, []) })); cache.set('tr', v); } return v; }
 
 function detectQualifications(text) {
   const found = [];

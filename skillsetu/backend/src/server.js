@@ -4,7 +4,7 @@ const { db, one } = require('./db');
 const scheduler = require('./scheduler');
 const events = require('./services/events');
 
-if (!one("SELECT 1 FROM users WHERE role='admin'")) {
+if (!(await one("SELECT 1 FROM users WHERE role='admin'"))) {
   console.log('No data found - seeding demo data...');
   require('./db/seed').seed();
 }

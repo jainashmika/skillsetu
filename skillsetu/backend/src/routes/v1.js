@@ -32,7 +32,7 @@ function ipAllowed(list, ip) {
 
 async function findPortalByKey(key) {
   if (!key || !key.startsWith('ssk_')) return null;
-  for (const p of all("SELECT * FROM portals WHERE api_key_prefix=? AND status='active'", key.slice(0, 14))) if (await bcrypt.compare(key, p.api_key_hash)) return p;
+  for (const p of await all("SELECT * FROM portals WHERE api_key_prefix=? AND status='active'", key.slice(0, 14))) if (await bcrypt.compare(key, p.api_key_hash)) return p;
   return null;
 }
 
@@ -51,11 +51,11 @@ const portalAuth = ah(async (req, res, next) => {
   let portal = null;
   const auth = req.headers.authorization;
   if (auth?.startsWith('Bearer ')) {
-    try { const p = jwt.verify(auth.slice(7), config.jwtSecret, { issuer: 'skillsetu', audience: 'skillsetu-api' }); portal = one("SELECT * FROM portals WHERE id=? AND status='active'", Number(String(p.sub).split(':')[1])); } catch { /* invalid */ }
+    try { const p = jwt.verify(auth.slice(7), config.jwtSecret, { issuer: 'skillsetu', audience: 'skillsetu-api' }); portal = await one("SELECT * FROM portals WHERE id=? AND status='active'", Number(String(p.sub).split(':')[1])); } catch { /* invalid */ }
   } else portal = await findPortalByKey(req.headers['x-api-key']);
   if (!portal) throw E.unauth('Missing or invalid API credentials. Send X-API-Key or an OAuth bearer token.');
   if (!ipAllowed(json(portal.ip_whitelist, []), req.ip)) {
-    run('INSERT INTO security_events(type,severity,ip,detail) VALUES(?,?,?,?)', 'ip_blocked', 'high', req.ip, `Portal ${portal.slug} call from non-whitelisted IP`);
+    await run('INSERT INTO security_events(type,severity,ip,detail) VALUES(?,?,?,?)', 'ip_blocked', 'high', req.ip, `Portal ${portal.slug} call from non-whitelisted IP`);
     sync.log(portal.id, 'push', 'auth', null, 403, false, `IP ${req.ip} not whitelisted`, 0);
     throw E.forbidden('Your IP address is not on this integration\'s whitelist.');
   }
@@ -71,11 +71,11 @@ function idempotent(handler) {
   return ah(async (req, res) => {
     const key = req.headers['idempotency-key'];
     if (key && !req.sandbox) {
-      const prev = one('SELECT * FROM idempotency_keys WHERE key=? AND portal_id=?', String(key), req.portal.id);
+      const prev = await one('SELECT * FROM idempotency_keys WHERE key=? AND portal_id=?', String(key), req.portal.id);
       if (prev) { res.setHeader('Idempotent-Replay', 'true'); return res.status(prev.status).json(JSON.parse(prev.response)); }
     }
     const out = await handler(req);
-    if (key && !req.sandbox) run('INSERT OR IGNORE INTO idempotency_keys(key, portal_id, status, response) VALUES(?,?,?,?)', String(key), req.portal.id, out.statusCode, JSON.stringify(out.body));
+    if (key && !req.sandbox) await run('INSERT OR IGNORE INTO idempotency_keys(key, portal_id, status, response) VALUES(?,?,?,?)', String(key), req.portal.id, out.statusCode, JSON.stringify(out.body));
     res.status(out.statusCode).json(out.body);
   });
 }
@@ -92,13 +92,13 @@ r.put('/portal/jobs/:externalId', portalAuth, idempotent(async (req) => {
   const idKey = { naukri: 'jobId', foundit: 'ref', ncs: 'ncsId' }[req.portal.adapter] || 'external_id';
   const payload = { ...req.body, [idKey]: req.params.externalId };
   if (req.sandbox) return sandboxRun(req.portal, payload);
-  if (!one('SELECT 1 FROM jobs WHERE portal_id=? AND external_id=?', req.portal.id, req.params.externalId)) return { statusCode: 404, body: { error: 'not_found', message: 'No job with this external_id. Use POST to create.' } };
+  if (!(await one('SELECT 1 FROM jobs WHERE portal_id=? AND external_id=?', req.portal.id, req.params.externalId))) return { statusCode: 404, body: { error: 'not_found', message: 'No job with this external_id. Use POST to create.' } };
   return sync.upsertJob(req.portal, payload);
 }));
 r.patch('/portal/jobs/:externalId/deadline', portalAuth, ah(async (req, res) => {
   const { deadline } = z.object({ deadline: z.string().regex(/^\d{4}-\d{2}-\d{2}$/) }).parse(req.body);
-  const j = one('SELECT * FROM jobs WHERE portal_id=? AND external_id=?', req.portal.id, req.params.externalId); if (!j) throw E.notFound('Job');
-  run("UPDATE jobs SET deadline=?, updated_at=datetime('now') WHERE id=?", deadline, j.id);
+  const j = await one('SELECT * FROM jobs WHERE portal_id=? AND external_id=?', req.portal.id, req.params.externalId); if (!j) throw E.notFound('Job');
+  await run("UPDATE jobs SET deadline=?, updated_at=datetime('now') WHERE id=?", deadline, j.id);
   if (j.status === 'expired' && deadline >= new Date().toISOString().slice(0, 10)) jobsSvc.transition(j.id, 'active', { reason: 'Deadline extended by portal' });
   sync.log(req.portal.id, 'push', 'deadline', j.external_id, 200, true, `Deadline -> ${deadline}`, 0); engine.invalidate();
   res.json({ id: j.id, external_id: j.external_id, deadline });

@@ -14,7 +14,7 @@ function where({ from, to, state, sector } = {}, alias = 'j') {
 }
 
 function overview() {
-  const n = (sql, ...p) => one(sql, ...p).c;
+  const n = async (sql, ...p) => (await one(sql, ...p)).c;
   return {
     seekers: n("SELECT COUNT(*) c FROM users WHERE role='seeker' AND status<>'banned'"),
     employers: n('SELECT COUNT(*) c FROM companies'),
@@ -30,30 +30,33 @@ function overview() {
   };
 }
 
-function employment(f = {}) {
+async function employment(f = {}) {
   const w = where(f);
-  const monthly = all(`SELECT strftime('%Y-%m', a.created_at) month, COUNT(*) applications, SUM(a.status='hired') hires, SUM(a.status IN ('shortlisted','interview','offered','hired')) progressed
-                       FROM applications a JOIN jobs j ON j.id=a.job_id WHERE 1=1 ${w.sql} GROUP BY month ORDER BY month`, ...w.p)
+  const monthly = (await all(`SELECT strftime('%Y-%m', a.created_at) month, COUNT(*) applications, SUM(a.status='hired') hires, SUM(a.status IN ('shortlisted','interview','offered','hired')) progressed
+                       FROM applications a JOIN jobs j ON j.id=a.job_id WHERE 1=1 ${w.sql} GROUP BY month ORDER BY month`, ...w.p))
     .map((r) => ({ ...r, hiringRate: r.applications ? Number(((r.hires / r.applications) * 100).toFixed(1)) : 0 }));
-  const ctc = all(`SELECT strftime('%Y-%m', COALESCE(j.published_at, j.created_at)) month, ROUND(AVG(j.ctc_min)) avgMin, ROUND(AVG(j.ctc_max)) avgMax, COUNT(*) jobs
+  const ctc = await all(`SELECT strftime('%Y-%m', COALESCE(j.published_at, j.created_at)) month, ROUND(AVG(j.ctc_min)) avgMin, ROUND(AVG(j.ctc_max)) avgMax, COUNT(*) jobs
                    FROM jobs j WHERE j.ctc_min IS NOT NULL ${w.sql} GROUP BY month ORDER BY month`, ...w.p);
-  const ctcBySector = all(`SELECT j.sector, ROUND(AVG((COALESCE(j.ctc_min,0)+COALESCE(j.ctc_max,j.ctc_min,0))/2.0)) avgCtc, COUNT(*) jobs FROM jobs j WHERE j.sector IS NOT NULL AND j.ctc_min IS NOT NULL ${w.sql} GROUP BY j.sector ORDER BY avgCtc DESC`, ...w.p);
-  const byState = all(`SELECT j.state, COUNT(*) jobs, COALESCE(SUM(j.openings),0) openings,
+  const ctcBySector = await all(`SELECT j.sector, ROUND(AVG((COALESCE(j.ctc_min,0)+COALESCE(j.ctc_max,j.ctc_min,0))/2.0)) avgCtc, COUNT(*) jobs FROM jobs j WHERE j.sector IS NOT NULL AND j.ctc_min IS NOT NULL ${w.sql} GROUP BY j.sector ORDER BY avgCtc DESC`, ...w.p);
+  const byState = await all(`SELECT j.state, COUNT(*) jobs, COALESCE(SUM(j.openings),0) openings,
                          (SELECT COUNT(*) FROM seeker_profiles sp WHERE sp.state=j.state) seekers,
                          (SELECT COUNT(*) FROM applications a JOIN jobs j2 ON j2.id=a.job_id WHERE j2.state=j.state AND a.status='hired') hires
                        FROM jobs j WHERE j.state IS NOT NULL ${w.sql} GROUP BY j.state ORDER BY jobs DESC`, ...w.p);
-  const bySector = all(`SELECT j.sector, COUNT(*) jobs, SUM(j.status='active') active FROM jobs j WHERE j.sector IS NOT NULL ${w.sql} GROUP BY j.sector ORDER BY jobs DESC`, ...w.p);
-  const funnel = ['applied', 'shortlisted', 'interview', 'offered', 'hired'].map((s, i, arr) => ({
-    stage: s, count: one(`SELECT COUNT(*) c FROM applications a JOIN jobs j ON j.id=a.job_id WHERE a.status IN (${arr.slice(i).map(() => '?').join(',')}) ${w.sql}`, ...arr.slice(i), ...w.p).c,
-  }));
+  const bySector = await all(`SELECT j.sector, COUNT(*) jobs, SUM(j.status='active') active FROM jobs j WHERE j.sector IS NOT NULL ${w.sql} GROUP BY j.sector ORDER BY jobs DESC`, ...w.p);
+  const funnel = await Promise.all(
+    ['applied', 'shortlisted', 'interview', 'offered', 'hired'].map(async (s, i, arr) => ({
+      stage: s,
+      count: (await one(`SELECT COUNT(*) c FROM applications a JOIN jobs j ON j.id=a.job_id WHERE a.status IN (${arr.slice(i).map(() => '?').join(',')}) ${w.sql}`, ...arr.slice(i), ...w.p)).c
+    }))
+  );
   return { monthly, ctc, ctcBySector, byState, bySector, funnel };
 }
 
-function skillGap(limit = 15) {
-  const demand = all(`SELECT s.id, s.name, s.category, COUNT(*) demand FROM job_skills js JOIN jobs j ON j.id=js.job_id JOIN skills s ON s.id=js.skill_id WHERE j.status='active' GROUP BY s.id`);
-  const supply = new Map(all('SELECT skill_id, COUNT(*) c FROM seeker_skills GROUP BY skill_id').map((r) => [r.skill_id, r.c]));
-  const totalSeekers = one("SELECT COUNT(*) c FROM users WHERE role='seeker'").c || 1;
-  const totalJobs = one("SELECT COUNT(*) c FROM jobs WHERE status='active'").c || 1;
+async function skillGap(limit = 15) {
+  const demand = await all(`SELECT s.id, s.name, s.category, COUNT(*) demand FROM job_skills js JOIN jobs j ON j.id=js.job_id JOIN skills s ON s.id=js.skill_id WHERE j.status='active' GROUP BY s.id`);
+  const supply = new Map((await all('SELECT skill_id, COUNT(*) c FROM seeker_skills GROUP BY skill_id')).map((r) => [r.skill_id, r.c]));
+  const totalSeekers = (await one("SELECT COUNT(*) c FROM users WHERE role='seeker'")).c || 1;
+  const totalJobs = (await one("SELECT COUNT(*) c FROM jobs WHERE status='active'")).c || 1;
   return demand.map((d) => {
     const s = supply.get(d.id) || 0; const dShare = d.demand / totalJobs; const sShare = s / totalSeekers;
     return { skill: d.name, category: d.category, demand: d.demand, supply: s, demandShare: Number((dShare * 100).toFixed(1)), supplyShare: Number((sShare * 100).toFixed(1)), gap: Number(((dShare - sShare) * 100).toFixed(1)),
@@ -61,21 +64,21 @@ function skillGap(limit = 15) {
   }).sort((a, b) => b.gap - a.gap).slice(0, limit);
 }
 
-function activity(days = 14) {
-  const daily = all(`SELECT date(created_at) day, event, COUNT(*) c FROM activity_events WHERE created_at > datetime('now', ?) GROUP BY day, event ORDER BY day`, `-${days} days`);
+async function activity(days = 14) {
+  const daily = await all(`SELECT date(created_at) day, event, COUNT(*) c FROM activity_events WHERE created_at > datetime('now', ?) GROUP BY day, event ORDER BY day`, `-${days} days`);
   const byDay = {};
   for (const r of daily) { byDay[r.day] = byDay[r.day] || { day: r.day }; byDay[r.day][r.event] = r.c; }
-  const topSearches = all(`SELECT LOWER(json_extract(meta,'$.q')) q, COUNT(*) c FROM activity_events WHERE event='search' AND json_extract(meta,'$.q') <> '' AND created_at > datetime('now','-30 days') GROUP BY q ORDER BY c DESC LIMIT 10`);
-  const byRole = all(`SELECT COALESCE(role,'guest') role, COUNT(*) c FROM activity_events WHERE created_at > datetime('now', ?) GROUP BY role`, `-${days} days`);
-  const activeUsers = one(`SELECT COUNT(DISTINCT user_id) c FROM activity_events WHERE user_id IS NOT NULL AND created_at > datetime('now','-7 days')`).c;
-  const guests = one(`SELECT COUNT(DISTINCT guest_id) c FROM activity_events WHERE guest_id IS NOT NULL AND user_id IS NULL AND created_at > datetime('now','-7 days')`).c;
+  const topSearches = await all(`SELECT LOWER(json_extract(meta,'$.q')) q, COUNT(*) c FROM activity_events WHERE event='search' AND json_extract(meta,'$.q') <> '' AND created_at > datetime('now','-30 days') GROUP BY q ORDER BY c DESC LIMIT 10`);
+  const byRole = await all(`SELECT COALESCE(role,'guest') role, COUNT(*) c FROM activity_events WHERE created_at > datetime('now', ?) GROUP BY role`, `-${days} days`);
+  const activeUsers = (await one(`SELECT COUNT(DISTINCT user_id) c FROM activity_events WHERE user_id IS NOT NULL AND created_at > datetime('now','-7 days')`)).c;
+  const guests = (await one(`SELECT COUNT(DISTINCT guest_id) c FROM activity_events WHERE guest_id IS NOT NULL AND user_id IS NULL AND created_at > datetime('now','-7 days')`)).c;
   return { daily: Object.values(byDay), topSearches, byRole, activeUsers7d: activeUsers, guests7d: guests };
 }
 
 // How well do match scores predict employer decisions? (SRS 3.5.3 "AI match accuracy")
-function matchAccuracy() {
+async function matchAccuracy() {
   const threshold = settings.get('match_threshold');
-  const rows = all(`SELECT status, match_score FROM applications WHERE match_score IS NOT NULL AND status IN ('shortlisted','interview','offered','hired','rejected')`);
+  const rows = await all(`SELECT status, match_score FROM applications WHERE match_score IS NOT NULL AND status IN ('shortlisted','interview','offered','hired','rejected')`);
   const pos = rows.filter((r) => r.status !== 'rejected'); const neg = rows.filter((r) => r.status === 'rejected');
   const tp = pos.filter((r) => r.match_score >= threshold).length; const fp = neg.filter((r) => r.match_score >= threshold).length;
   const fn = pos.length - tp; const tn = neg.length - fp;

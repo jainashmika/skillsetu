@@ -17,20 +17,20 @@ const DEFAULTS = {
 };
 
 let cache = null;
-function load() {
-  const rows = all('SELECT key, value FROM system_settings');
+async function load() {
+  const rows = await all('SELECT key, value FROM system_settings');
   cache = { ...DEFAULTS };
   for (const r of rows) { try { cache[r.key] = JSON.parse(r.value); } catch { /* ignore bad row */ } }
   return cache;
 }
 const get = (key) => (cache || load())[key];
 const getAll = () => ({ ...(cache || load()) });
-function set(key, value, userId) {
+async function set(key, value, userId) {
   if (!(key in DEFAULTS)) throw new Error(`Unknown setting ${key}`);
-  run(`INSERT INTO system_settings(key,value,updated_by,updated_at) VALUES(?,?,?,datetime('now'))
+  await run(`INSERT INTO system_settings(key,value,updated_by,updated_at) VALUES(?,?,?,datetime('now'))
        ON CONFLICT(key) DO UPDATE SET value=excluded.value, updated_by=excluded.updated_by, updated_at=excluded.updated_at`,
   key, JSON.stringify(value), userId || null);
   cache = null;
 }
-const meta = () => all('SELECT key, updated_by, updated_at FROM system_settings');
+const meta = async () => await all('SELECT key, updated_by, updated_at FROM system_settings');
 module.exports = { get, getAll, set, DEFAULTS, meta, reload: load, _one: one };

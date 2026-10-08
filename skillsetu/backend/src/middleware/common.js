@@ -25,33 +25,41 @@ function requestLog(req, res, next) {
 
 const bucket = new TokenBucket();
 function rateLimit(name, perMin) {
-  return (req, res, next) => {
-    if (config.env === 'test') return next();
-    const key = `${name}:${req.ip}`;
-    const r = bucket.take(key, perMin);
-    res.setHeader('X-RateLimit-Limit', perMin); res.setHeader('X-RateLimit-Remaining', r.remaining);
-    if (!r.ok) {
-      res.setHeader('Retry-After', r.retryAfterSec);
-      run('INSERT INTO security_events(type,severity,ip,detail) VALUES(?,?,?,?)', 'rate_limited', 'low', req.ip, `${name} ${req.method} ${req.originalUrl}`.slice(0, 200));
-      return next(E.tooMany());
+  return async (req, res, next) => {
+    try {
+      if (config.env === 'test') return next();
+      const key = `${name}:${req.ip}`;
+      const r = bucket.take(key, perMin);
+      res.setHeader('X-RateLimit-Limit', perMin); res.setHeader('X-RateLimit-Remaining', r.remaining);
+      if (!r.ok) {
+        res.setHeader('Retry-After', r.retryAfterSec);
+        await run('INSERT INTO security_events(type,severity,ip,detail) VALUES(?,?,?,?)', 'rate_limited', 'low', req.ip, `${name} ${req.method} ${req.originalUrl}`.slice(0, 200));
+        return next(E.tooMany());
+      }
+      next();
+    } catch (err) {
+      next(err);
     }
-    next();
   };
 }
 
 // Flags common injection payloads for security monitoring (NFR-45). Parameterised SQL and React
 // escaping already neutralise these; this is detection, not the defence.
 const SUSPICIOUS = /(<script|javascript:|onerror=|union\s+select|;\s*drop\s+table|'\s*or\s+'1'\s*=\s*'1|\.\.\/\.\.\/)/i;
-function ids(req, _res, next) {
-  const probe = `${decodeURIComponent(req.originalUrl || '')} ${req.body && typeof req.body === 'object' ? JSON.stringify(req.body).slice(0, 4000) : ''}`;
-  if (SUSPICIOUS.test(probe)) run('INSERT INTO security_events(type,severity,ip,detail) VALUES(?,?,?,?)', 'suspicious_input', 'medium', req.ip, `${req.method} ${req.originalUrl}`.slice(0, 200));
-  next();
+async function ids(req, _res, next) {
+  try {
+    const probe = `${decodeURIComponent(req.originalUrl || '')} ${req.body && typeof req.body === 'object' ? JSON.stringify(req.body).slice(0, 4000) : ''}`;
+    if (SUSPICIOUS.test(probe)) await run('INSERT INTO security_events(type,severity,ip,detail) VALUES(?,?,?,?)', 'suspicious_input', 'medium', req.ip, `${req.method} ${req.originalUrl}`.slice(0, 200));
+    next();
+  } catch (err) {
+    next(err);
+  }
 }
 
 function notFound(req, _res, next) { next(new AppError(404, 'This endpoint does not exist.', 'not_found')); }
 
 // eslint-disable-next-line no-unused-vars
-function errorHandler(err, req, res, _next) {
+async function errorHandler(err, req, res, _next) {
   if (err instanceof ZodError) {
     const fields = {}; for (const i of err.issues) fields[i.path.join('.') || '_'] = i.message;
     return res.status(400).json({ error: 'validation_failed', message: Object.values(fields)[0] || 'Please check the highlighted fields.', fields });
@@ -61,7 +69,7 @@ function errorHandler(err, req, res, _next) {
   if (err.code === 'LIMIT_FILE_SIZE') return res.status(400).json({ error: 'file_too_large', message: 'File is too large (max 5 MB).' });
   if (err.type === 'entity.parse.failed') return res.status(400).json({ error: 'bad_json', message: 'Request body is not valid JSON.' });
   const ref = crypto.randomUUID().slice(0, 8);
-  try { run('INSERT INTO error_logs(ref,method,path,message,stack) VALUES(?,?,?,?,?)', ref, req.method, req.originalUrl, err.message, err.stack); } catch { /* ignore */ }
+  try { await run('INSERT INTO error_logs(ref,method,path,message,stack) VALUES(?,?,?,?,?)', ref, req.method, req.originalUrl, err.message, err.stack); } catch { /* ignore */ }
   if (config.env !== 'test') console.error(`[error ${ref}]`, err);
   res.status(500).json({ error: 'server_error', message: `Something went wrong on our side. Please try again. Reference: ${ref}` });
 }

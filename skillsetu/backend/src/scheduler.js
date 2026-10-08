@@ -18,12 +18,12 @@ function start() {
   every(15 * 60_000, 'recommender', () => recommender.train());
   every(60 * 60_000, 'reports', () => reports.runSchedules(notify));
   every(24 * 60 * 60_000, 'backup', () => backup.backup('full'));
-  every(6 * 60 * 60_000, 'retention', () => {
-    run("DELETE FROM revoked_tokens WHERE expires_at < datetime('now')");
-    run("DELETE FROM otps WHERE expires_at < datetime('now','-1 day')");
-    run("DELETE FROM idempotency_keys WHERE created_at < datetime('now','-2 days')");
-    run('DELETE FROM activity_events WHERE created_at < datetime(\'now\', ?)', `-${settings.get('log_retention_days')} days`);
-    run('DELETE FROM access_logs WHERE created_at < datetime(\'now\', ?)', `-${settings.get('log_retention_days')} days`);
+  every(6 * 60 * 60_000, 'retention', async () => {
+    await run("DELETE FROM revoked_tokens WHERE expires_at < datetime('now')");
+    await run("DELETE FROM otps WHERE expires_at < datetime('now','-1 day')");
+    await run("DELETE FROM idempotency_keys WHERE created_at < datetime('now','-2 days')");
+    await run('DELETE FROM activity_events WHERE created_at < datetime(\'now\', ?)', `-${settings.get('log_retention_days')} days`);
+    await run('DELETE FROM access_logs WHERE created_at < datetime(\'now\', ?)', `-${settings.get('log_retention_days')} days`);
   });
 }
 module.exports = { start };

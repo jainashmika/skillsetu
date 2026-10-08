@@ -10,11 +10,11 @@ const engine = require('./engine');
 const EVENT_WEIGHT = { view_job: 1, save_job: 3, apply: 5, click_rec: 2 };
 let model = { trainedAt: null, users: new Map(), items: new Map(), U: new Map(), V: new Map(), itemNorm: new Map(), k: 8, loss: null, interactions: 0 };
 
-function interactions() {
-  const rows = all(`SELECT user_id, job_id, event, COUNT(*) c FROM activity_events
+async function interactions() {
+  const rows = await all(`SELECT user_id, job_id, event, COUNT(*) c FROM activity_events
                     WHERE user_id IS NOT NULL AND job_id IS NOT NULL AND event IN ('view_job','save_job','apply','click_rec')
                     GROUP BY user_id, job_id, event`);
-  const apps = all('SELECT seeker_id user_id, job_id FROM applications');
+  const apps = await all('SELECT seeker_id user_id, job_id FROM applications');
   const m = new Map(); // user -> Map(job -> weight)
   const add = (u, j, w) => { if (!m.has(u)) m.set(u, new Map()); const r = m.get(u); r.set(j, Math.min(10, (r.get(j) || 0) + w)); };
   for (const r of rows) add(r.user_id, r.job_id, (EVENT_WEIGHT[r.event] || 1) * Math.min(3, r.c));
@@ -73,12 +73,12 @@ function mfScore(userId, jobId) {
 // Popularity prior from historical click-through: applications / views (smoothed).
 function ctrPrior(job) { const apps = job._apps || 0; return (apps + 1) / ((job.views || 0) + 10); }
 
-function recommendForSeeker(seeker, { n = 12, excludeApplied = true } = {}) {
+async function recommendForSeeker(seeker, { n = 12, excludeApplied = true } = {}) {
   if (!model.trainedAt) train();
-  const applied = new Set(excludeApplied ? all('SELECT job_id FROM applications WHERE seeker_id = ?', seeker.id).map((r) => r.job_id) : []);
+  const applied = new Set(excludeApplied ? (await all('SELECT job_id FROM applications WHERE seeker_id = ?', seeker.id)).map((r) => r.job_id) : []);
   const pool = engine.topJobsForSeeker(seeker, { n: n * 3, excludeIds: applied });
   const blend = Number(settings.get('cf_blend'));
-  const appCounts = new Map(all("SELECT job_id, COUNT(*) c FROM applications GROUP BY job_id").map((r) => [r.job_id, r.c]));
+  const appCounts = new Map((await all("SELECT job_id, COUNT(*) c FROM applications GROUP BY job_id")).map((r) => [r.job_id, r.c]));
   const recs = pool.map((r) => {
     r.job._apps = appCounts.get(r.job.id) || 0;
     const cf = model.users.has(seeker.id) ? 0.6 * itemItemScore(seeker.id, r.job.id) + 0.4 * (mfScore(seeker.id, r.job.id) - 0.5) * 2 : 0;
@@ -91,8 +91,8 @@ function recommendForSeeker(seeker, { n = 12, excludeApplied = true } = {}) {
 
 const upsert = db.prepare(`INSERT INTO recommendations(seeker_id, job_id, score, breakdown, computed_at) VALUES(?,?,?,?,datetime('now'))
   ON CONFLICT(seeker_id, job_id) DO UPDATE SET score=excluded.score, breakdown=excluded.breakdown, computed_at=excluded.computed_at`);
-const persist = db.transaction((sid, recs) => {
-  run('DELETE FROM recommendations WHERE seeker_id = ?', sid);
+const persist = db.transaction(async (sid, recs) => {
+  await run('DELETE FROM recommendations WHERE seeker_id = ?', sid);
   for (const r of recs) upsert.run(sid, r.job.id, r.score, JSON.stringify({ strengths: r.strengths, gaps: r.gaps }));
 });
 

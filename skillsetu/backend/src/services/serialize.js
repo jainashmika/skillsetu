@@ -46,8 +46,8 @@ function seekerFull(p) {
 }
 
 // Employer-facing candidate view. Contact details only when the candidate applied to this company.
-function candidateView(p, { companyId, reveal = false } = {}) {
-  const applied = reveal || (companyId && one('SELECT 1 FROM applications a JOIN jobs j ON j.id=a.job_id WHERE a.seeker_id=? AND j.company_id=?', p.id, companyId));
+async function candidateView(p, { companyId, reveal = false } = {}) {
+  const applied = reveal || (companyId && (await one('SELECT 1 FROM applications a JOIN jobs j ON j.id=a.job_id WHERE a.seeker_id=? AND j.company_id=?', p.id, companyId)));
   const f = seekerFull(p);
   return {
     id: f.id, name: f.name, headline: f.headline, about: f.about, city: f.city, state: f.state, educationLevel: f.educationLevel, educationLabel: f.educationLabel,
@@ -59,7 +59,19 @@ function candidateView(p, { companyId, reveal = false } = {}) {
   };
 }
 
-const companyCard = (c) => ({ id: c.id, name: c.name, slug: c.slug, logo: c.logo_url, industry: c.industry, city: c.city, state: c.state, size: c.size, website: c.website, about: c.about, verified: c.verification_status === 'verified',
-  activeJobs: one("SELECT COUNT(*) c FROM jobs WHERE company_id=? AND status='active'", c.id).c });
+const companyCard = async c => ({
+  id: c.id,
+  name: c.name,
+  slug: c.slug,
+  logo: c.logo_url,
+  industry: c.industry,
+  city: c.city,
+  state: c.state,
+  size: c.size,
+  website: c.website,
+  about: c.about,
+  verified: c.verification_status === 'verified',
+  activeJobs: (await one("SELECT COUNT(*) c FROM jobs WHERE company_id=? AND status='active'", c.id)).c
+});
 
 module.exports = { jobCard, completion, seekerFull, candidateView, companyCard, _all: all };

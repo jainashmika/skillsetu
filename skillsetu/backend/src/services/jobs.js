@@ -57,17 +57,17 @@ function save(input, { id, companyId, postedBy, portalId = null, externalId = nu
   const state = d.state || taxonomy.stateOf(city);
   const { skills, unknown } = resolveSkills(d.skills);
   const deadline = d.deadline || new Date(Date.now() + settings.get('job_default_validity_days') * 86400000).toISOString().slice(0, 10);
-  const jobId = db.transaction(() => {
+  const jobId = db.transaction(async () => {
     let jid = id;
     const cols = [d.title, d.description, d.sector || null, d.occupation_id || null, d.contract_type, d.work_format, city, state, d.ctc_min ?? null, d.ctc_max ?? null, d.experience_min, d.experience_max ?? null, d.education_level, d.openings, deadline, d.visibility];
     if (jid) {
-      run(`UPDATE jobs SET title=?, description=?, sector=?, occupation_id=?, contract_type=?, work_format=?, city=?, state=?, ctc_min=?, ctc_max=?, experience_min=?, experience_max=?, education_level=?, openings=?, deadline=?, visibility=?, updated_at=datetime('now') WHERE id=?`, ...cols, jid);
-      run('DELETE FROM job_skills WHERE job_id=?', jid);
+      await run(`UPDATE jobs SET title=?, description=?, sector=?, occupation_id=?, contract_type=?, work_format=?, city=?, state=?, ctc_min=?, ctc_max=?, experience_min=?, experience_max=?, education_level=?, openings=?, deadline=?, visibility=?, updated_at=datetime('now') WHERE id=?`, ...cols, jid);
+      await run('DELETE FROM job_skills WHERE job_id=?', jid);
     } else {
-      const r = run(`INSERT INTO jobs(title, description, sector, occupation_id, contract_type, work_format, city, state, ctc_min, ctc_max, experience_min, experience_max, education_level, openings, deadline, visibility, company_id, posted_by, portal_id, external_id, source, external_company, status)
+      const r = await run(`INSERT INTO jobs(title, description, sector, occupation_id, contract_type, work_format, city, state, ctc_min, ctc_max, experience_min, experience_max, education_level, openings, deadline, visibility, company_id, posted_by, portal_id, external_id, source, external_company, status)
                      VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`, ...cols, companyId || null, postedBy || null, portalId, externalId, source, externalCompany, 'draft');
       jid = Number(r.lastInsertRowid);
-      run('INSERT INTO job_status_history(job_id, from_status, to_status, actor_id, reason) VALUES(?,?,?,?,?)', jid, null, 'draft', postedBy || null, source === 'direct' ? 'Created' : `Imported from ${source}`);
+      await run('INSERT INTO job_status_history(job_id, from_status, to_status, actor_id, reason) VALUES(?,?,?,?,?)', jid, null, 'draft', postedBy || null, source === 'direct' ? 'Created' : `Imported from ${source}`);
     }
     for (const s of skills) insertSkill.run(jid, s.id, s.required ? 1 : 0);
     return jid;
@@ -77,31 +77,31 @@ function save(input, { id, companyId, postedBy, portalId = null, externalId = nu
   return { job: get(jobId), unknownSkills: unknown };
 }
 
-function get(id) {
-  const j = one(`SELECT j.*, c.name company_name, c.slug company_slug, c.logo_url, c.verification_status company_verification, c.about company_about, c.website company_website, c.industry company_industry,
+async function get(id) {
+  const j = await one(`SELECT j.*, c.name company_name, c.slug company_slug, c.logo_url, c.verification_status company_verification, c.about company_about, c.website company_website, c.industry company_industry,
                         p.name portal_name
                  FROM jobs j LEFT JOIN companies c ON c.id=j.company_id LEFT JOIN portals p ON p.id=j.portal_id WHERE j.id=?`, id);
   if (!j) return null;
-  j.skills = all('SELECT s.id, s.name, s.category, js.required FROM job_skills js JOIN skills s ON s.id=js.skill_id WHERE js.job_id=? ORDER BY js.required DESC, s.name', id).map((s) => ({ ...s, required: !!s.required }));
+  j.skills = (await all('SELECT s.id, s.name, s.category, js.required FROM job_skills js JOIN skills s ON s.id=js.skill_id WHERE js.job_id=? ORDER BY js.required DESC, s.name', id)).map((s) => ({ ...s, required: !!s.required }));
   j.education_label = taxonomy.EDU_LEVELS[j.education_level]?.label;
   j.company_display = j.company_name || j.external_company || j.portal_name || 'Employer';
   return j;
 }
 
-function transition(jobId, to, { actorId = null, reason = null } = {}) {
-  const j = one('SELECT * FROM jobs WHERE id=?', jobId);
+async function transition(jobId, to, { actorId = null, reason = null } = {}) {
+  const j = await one('SELECT * FROM jobs WHERE id=?', jobId);
   if (!j) throw E.notFound('Job');
   if (j.status === to) return get(jobId);
   if (!TRANSITIONS[j.status]?.includes(to)) throw E.bad(`A ${j.status} job cannot move to ${to}. Allowed: ${TRANSITIONS[j.status].join(', ') || 'none'}.`);
   if (to === 'active') {
     if (j.deadline && j.deadline < new Date().toISOString().slice(0, 10)) throw E.bad('The deadline has passed. Extend the deadline before activating this job.');
-    const skillCount = one('SELECT COUNT(*) c FROM job_skills WHERE job_id=?', jobId).c;
+    const skillCount = (await one('SELECT COUNT(*) c FROM job_skills WHERE job_id=?', jobId)).c;
     if (!skillCount && j.source === 'direct') throw E.bad('Add at least one skill before publishing so we can match candidates.');
   }
   const firstPublish = to === 'active' && !j.published_at;
-  db.transaction(() => {
-    run(`UPDATE jobs SET status=?, published_at=COALESCE(published_at, CASE WHEN ?='active' THEN datetime('now') END), updated_at=datetime('now') WHERE id=?`, to, to, jobId);
-    run('INSERT INTO job_status_history(job_id, from_status, to_status, actor_id, reason) VALUES(?,?,?,?,?)', jobId, j.status, to, actorId, reason);
+  db.transaction(async () => {
+    await run(`UPDATE jobs SET status=?, published_at=COALESCE(published_at, CASE WHEN ?='active' THEN datetime('now') END), updated_at=datetime('now') WHERE id=?`, to, to, jobId);
+    await run('INSERT INTO job_status_history(job_id, from_status, to_status, actor_id, reason) VALUES(?,?,?,?,?)', jobId, j.status, to, actorId, reason);
   })();
   engine.invalidate();
   if (firstPublish) setImmediate(() => { try { onPublished(jobId); } catch (e) { console.error('[jobs] publish hook', e.message); } });
@@ -109,9 +109,9 @@ function transition(jobId, to, { actorId = null, reason = null } = {}) {
 }
 
 // Publish hook: saved-search alerts + notify strong-match seekers (SRS 3.2.2 automated alerts, 3.6.2).
-function onPublished(jobId) {
+async function onPublished(jobId) {
   const job = get(jobId); if (!job) return;
-  const searches = all(`SELECT ss.*, u.name FROM saved_searches ss JOIN users u ON u.id=ss.user_id
+  const searches = await all(`SELECT ss.*, u.name FROM saved_searches ss JOIN users u ON u.id=ss.user_id
                         LEFT JOIN notification_prefs np ON np.user_id=u.id
                         WHERE ss.alert=1 AND u.status='active' AND COALESCE(np.job_alerts,1)=1`);
   const notified = new Set();
@@ -134,12 +134,12 @@ function onPublished(jobId) {
   }
 }
 
-function expireDue() {
+async function expireDue() {
   const today = new Date().toISOString().slice(0, 10);
-  const due = all("SELECT id FROM jobs WHERE status IN ('active','paused') AND deadline IS NOT NULL AND deadline < ?", today);
+  const due = await all("SELECT id FROM jobs WHERE status IN ('active','paused') AND deadline IS NOT NULL AND deadline < ?", today);
   for (const d of due) {
-    const j = one('SELECT status FROM jobs WHERE id=?', d.id);
-    if (j.status === 'paused') { run("UPDATE jobs SET status='expired' WHERE id=?", d.id); run("INSERT INTO job_status_history(job_id,from_status,to_status,reason) VALUES(?,?,?,?)", d.id, 'paused', 'expired', 'Deadline passed'); }
+    const j = await one('SELECT status FROM jobs WHERE id=?', d.id);
+    if (j.status === 'paused') { await run("UPDATE jobs SET status='expired' WHERE id=?", d.id); await run("INSERT INTO job_status_history(job_id,from_status,to_status,reason) VALUES(?,?,?,?)", d.id, 'paused', 'expired', 'Deadline passed'); }
     else transition(d.id, 'expired', { reason: 'Deadline passed' });
   }
   if (due.length) engine.invalidate();

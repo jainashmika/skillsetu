@@ -12,29 +12,29 @@ let state = { version: 0, builtVersion: -1, vec: new Vectorizer(), jobs: new Map
 const invalidate = () => { state.version++; };
 
 // ---------- data loading ----------
-function loadJobs(where = "j.status = 'active'", params = []) {
-  const rows = all(`SELECT j.*, c.name AS company_name, c.slug AS company_slug, c.logo_url, c.verification_status AS company_verification
+async function loadJobs(where = "j.status = 'active'", params = []) {
+  const rows = await all(`SELECT j.*, c.name AS company_name, c.slug AS company_slug, c.logo_url, c.verification_status AS company_verification
                     FROM jobs j LEFT JOIN companies c ON c.id = j.company_id WHERE ${where}`, ...params);
   if (!rows.length) return [];
   const ids = rows.map((r) => r.id);
-  const sk = all(`SELECT job_id, skill_id, required FROM job_skills WHERE job_id IN (${ids.map(() => '?').join(',')})`, ...ids);
+  const sk = await all(`SELECT job_id, skill_id, required FROM job_skills WHERE job_id IN (${ids.map(() => '?').join(',')})`, ...ids);
   const byJob = new Map();
   for (const s of sk) { if (!byJob.has(s.job_id)) byJob.set(s.job_id, []); byJob.get(s.job_id).push({ id: s.skill_id, required: !!s.required }); }
   return rows.map((r) => ({ ...r, skills: byJob.get(r.id) || [] }));
 }
-function loadSeeker(userId) {
-  const p = all(`SELECT u.id, u.name, u.email, u.phone_masked, sp.* FROM users u JOIN seeker_profiles sp ON sp.user_id = u.id WHERE u.id = ?`, userId)[0];
+async function loadSeeker(userId) {
+  const p = (await all(`SELECT u.id, u.name, u.email, u.phone_masked, sp.* FROM users u JOIN seeker_profiles sp ON sp.user_id = u.id WHERE u.id = ?`, userId))[0];
   if (!p) return null;
-  p.skills = all('SELECT skill_id AS id, level, source, confidence FROM seeker_skills WHERE user_id = ?', userId);
-  p.educations = all('SELECT * FROM educations WHERE user_id = ? ORDER BY level DESC, year DESC', userId);
-  p.experiences = all('SELECT * FROM experiences WHERE user_id = ? ORDER BY current DESC, start_date DESC', userId);
+  p.skills = await all('SELECT skill_id AS id, level, source, confidence FROM seeker_skills WHERE user_id = ?', userId);
+  p.educations = await all('SELECT * FROM educations WHERE user_id = ? ORDER BY level DESC, year DESC', userId);
+  p.experiences = await all('SELECT * FROM experiences WHERE user_id = ? ORDER BY current DESC, start_date DESC', userId);
   p.preferred_locations = json(p.preferred_locations, []);
   p.sectors = json(p.sectors, []);
   p.languages = json(p.languages, []);
   return p;
 }
-function loadSeekers(where = '1=1', params = []) {
-  const ids = all(`SELECT u.id FROM users u JOIN seeker_profiles sp ON sp.user_id = u.id WHERE u.status='active' AND u.role='seeker' AND ${where}`, ...params).map((r) => r.id);
+async function loadSeekers(where = '1=1', params = []) {
+  const ids = (await all(`SELECT u.id FROM users u JOIN seeker_profiles sp ON sp.user_id = u.id WHERE u.status='active' AND u.role='seeker' AND ${where}`, ...params)).map((r) => r.id);
   return ids.map(loadSeeker).filter(Boolean);
 }
 

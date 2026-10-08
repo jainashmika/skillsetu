@@ -73,15 +73,15 @@ function preview(name, filters, limit = 50) {
   return { columns: DATASETS[name].columns, rows: out };
 }
 
-function runSchedules(notify) {
-  const due = all(`SELECT * FROM report_schedules WHERE last_run_at IS NULL
+async function runSchedules(notify) {
+  const due = await all(`SELECT * FROM report_schedules WHERE last_run_at IS NULL
                    OR (frequency='daily' AND last_run_at < datetime('now','-1 day'))
                    OR (frequency='weekly' AND last_run_at < datetime('now','-7 days'))
                    OR (frequency='monthly' AND last_run_at < datetime('now','-1 month'))`);
   for (const s of due) {
     let rows = 0; for (const _ of rowsOf(s.dataset, JSON.parse(s.filters || '{}'))) rows++; // eslint-disable-line no-unused-vars
-    run("INSERT INTO outbox(channel,to_addr,subject,body,template,status) VALUES('email',?,?,?,?,'queued')", s.recipient, `Scheduled report: ${s.name}`, `Your scheduled report "${s.name}" (${DATASETS[s.dataset].label}) is ready with ${rows} rows. Download it from Admin > Reports.`, 'report');
-    run("UPDATE report_schedules SET last_run_at=datetime('now') WHERE id=?", s.id);
+    await run("INSERT INTO outbox(channel,to_addr,subject,body,template,status) VALUES('email',?,?,?,?,'queued')", s.recipient, `Scheduled report: ${s.name}`, `Your scheduled report "${s.name}" (${DATASETS[s.dataset].label}) is ready with ${rows} rows. Download it from Admin > Reports.`, 'report');
+    await run("UPDATE report_schedules SET last_run_at=datetime('now') WHERE id=?", s.id);
   }
   return due.length;
 }

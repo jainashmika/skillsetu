@@ -15,39 +15,39 @@ const engine = require('../services/matching/engine');
 
 const r = express.Router();
 r.use(requireRole('portal'));
-const myPortal = (req) => { const p = one('SELECT * FROM portals WHERE owner_user_id=?', req.user.id); if (!p) throw E.notFound('Portal'); return p; };
+const myPortal = async req => { const p = await one('SELECT * FROM portals WHERE owner_user_id=?', req.user.id); if (!p) throw E.notFound('Portal'); return p; };
 const portalOut = (p) => ({ id: p.id, name: p.name, slug: p.slug, status: p.status, adapter: p.adapter, rateLimitPerMin: p.rate_limit_per_min, ipWhitelist: json(p.ip_whitelist, []), fieldMapping: json(p.field_mapping, {}), apiKeyPrefix: p.api_key_prefix, hasKey: !!p.api_key_hash, createdAt: p.created_at });
 
-r.get('/overview', (req, res) => {
+r.get('/overview', async (req, res) => {
   const p = myPortal(req);
   res.json({ portal: portalOut(p), health: sync.health(p.id), daily: sync.daily(p.id), adapters: Object.fromEntries(Object.entries(adapters).map(([k, v]) => [k, { label: v.label, sample: v.sample }])),
-    recent: all('SELECT * FROM sync_logs WHERE portal_id=? ORDER BY id DESC LIMIT 10', p.id) });
+    recent: await all('SELECT * FROM sync_logs WHERE portal_id=? ORDER BY id DESC LIMIT 10', p.id) });
 });
-r.get('/logs', (req, res) => {
+r.get('/logs', async (req, res) => {
   const p = myPortal(req); const ok = req.query.ok; const page = Math.max(1, Number(req.query.page) || 1);
   const where = ok === 'true' ? 'AND ok=1' : ok === 'false' ? 'AND ok=0' : '';
-  res.json({ items: all(`SELECT * FROM sync_logs WHERE portal_id=? ${where} ORDER BY id DESC LIMIT 50 OFFSET ?`, p.id, (page - 1) * 50), total: one(`SELECT COUNT(*) c FROM sync_logs WHERE portal_id=? ${where}`, p.id).c });
+  res.json({ items: await all(`SELECT * FROM sync_logs WHERE portal_id=? ${where} ORDER BY id DESC LIMIT 50 OFFSET ?`, p.id, (page - 1) * 50), total: (await one(`SELECT COUNT(*) c FROM sync_logs WHERE portal_id=? ${where}`, p.id)).c });
 });
-r.get('/dead-letters', (req, res) => { const p = myPortal(req); res.json({ items: all("SELECT * FROM dead_letters WHERE portal_id=? ORDER BY status='pending' DESC, id DESC LIMIT 100", p.id).map((d) => ({ ...d, payload: json(d.payload, {}) })) }); });
+r.get('/dead-letters', async (req, res) => { const p = myPortal(req); res.json({ items: (await all("SELECT * FROM dead_letters WHERE portal_id=? ORDER BY status='pending' DESC, id DESC LIMIT 100", p.id)).map((d) => ({ ...d, payload: json(d.payload, {}) })) }); });
 r.post('/dead-letters/:id/retry', ah(async (req, res) => {
-  const p = myPortal(req); const d = one('SELECT * FROM dead_letters WHERE id=? AND portal_id=?', req.params.id, p.id); if (!d) throw E.notFound('Failed submission');
-  if (req.body?.payload) run('UPDATE dead_letters SET payload=? WHERE id=?', JSON.stringify(req.body.payload), d.id);
+  const p = myPortal(req); const d = await one('SELECT * FROM dead_letters WHERE id=? AND portal_id=?', req.params.id, p.id); if (!d) throw E.notFound('Failed submission');
+  if (req.body?.payload) await run('UPDATE dead_letters SET payload=? WHERE id=?', JSON.stringify(req.body.payload), d.id);
   const r2 = sync.retryDeadLetter(d.id); res.json({ ok: r2.ok, result: r2.body });
 }));
-r.post('/dead-letters/:id/discard', (req, res) => { const p = myPortal(req); run("UPDATE dead_letters SET status='discarded' WHERE id=? AND portal_id=?", req.params.id, p.id); res.json({ ok: true }); });
+r.post('/dead-letters/:id/discard', async (req, res) => { const p = myPortal(req); await run("UPDATE dead_letters SET status='discarded' WHERE id=? AND portal_id=?", req.params.id, p.id); res.json({ ok: true }); });
 
 r.post('/api-key/rotate', ah(async (req, res) => {
   const p = myPortal(req);
   if (p.status !== 'active') throw E.forbidden('Your integration must be approved by an administrator before you can create API keys.');
   const key = `ssk_live_${randomToken(24)}`;
-  run('UPDATE portals SET api_key_hash=?, api_key_prefix=? WHERE id=?', bcrypt.hashSync(key, 10), key.slice(0, 14), p.id);
+  await run('UPDATE portals SET api_key_hash=?, api_key_prefix=? WHERE id=?', bcrypt.hashSync(key, 10), key.slice(0, 14), p.id);
   audit(req, 'portal.key_rotated', 'portal', p.id);
   res.json({ apiKey: key, clientId: p.slug, message: 'Copy this key now. For security it will not be shown again.' });
 }));
 r.put('/settings', ah(async (req, res) => {
   const p = myPortal(req);
   const d = z.object({ ipWhitelist: z.array(z.string().trim().regex(/^[\d.:a-fA-F/]+$/, 'Enter IPv4/IPv6 addresses or CIDR ranges')).max(20), fieldMapping: z.record(z.string()).default({}), adapter: z.enum(Object.keys(adapters)) }).parse(req.body);
-  run('UPDATE portals SET ip_whitelist=?, field_mapping=?, adapter=? WHERE id=?', JSON.stringify(d.ipWhitelist), JSON.stringify(d.fieldMapping), d.adapter, p.id);
+  await run('UPDATE portals SET ip_whitelist=?, field_mapping=?, adapter=? WHERE id=?', JSON.stringify(d.ipWhitelist), JSON.stringify(d.fieldMapping), d.adapter, p.id);
   audit(req, 'portal.settings', 'portal', p.id, d);
   res.json({ portal: portalOut(myPortal(req)) });
 }));

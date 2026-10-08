@@ -24,33 +24,33 @@ const EMAIL_TEMPLATES = {
   report: (v) => ({ subject: `Scheduled report: ${v.name}`, html: `Your scheduled report "${v.name}" is ready (${v.rows} rows). Download it from Admin > Reports.` }),
 };
 
-const prefsOf = (userId) => one('SELECT * FROM notification_prefs WHERE user_id = ?', userId) || { email_mode: 'immediate', sms_opt_in: 1, inapp: 1, job_alerts: 1 };
+const prefsOf = async userId => (await one('SELECT * FROM notification_prefs WHERE user_id = ?', userId)) || { email_mode: 'immediate', sms_opt_in: 1, inapp: 1, job_alerts: 1 };
 
-function inApp(userId, { type, title, body, link }) {
-  const r = run('INSERT INTO notifications(user_id,type,title,body,link) VALUES(?,?,?,?,?)', userId, type, title, body || null, link || null);
-  const row = one('SELECT * FROM notifications WHERE id = ?', r.lastInsertRowid);
+async function inApp(userId, { type, title, body, link }) {
+  const r = await run('INSERT INTO notifications(user_id,type,title,body,link) VALUES(?,?,?,?,?)', userId, type, title, body || null, link || null);
+  const row = await one('SELECT * FROM notifications WHERE id = ?', r.lastInsertRowid);
   bus.emit(`notify:${userId}`, row);
   return row;
 }
 
-function email(userId, template, vars, { critical = false } = {}) {
-  const u = one('SELECT email, name FROM users WHERE id = ?', userId); if (!u) return;
+async function email(userId, template, vars, { critical = false } = {}) {
+  const u = await one('SELECT email, name FROM users WHERE id = ?', userId); if (!u) return;
   const p = prefsOf(userId);
   if (p.email_mode === 'off' && !critical) return;
   const { subject, html } = (EMAIL_TEMPLATES[template] || EMAIL_TEMPLATES.generic)({ name: u.name, ...vars });
   const status = p.email_mode === 'digest' && !critical ? 'digest' : 'queued';
-  run('INSERT INTO outbox(channel,user_id,to_addr,subject,body,template,status) VALUES(?,?,?,?,?,?,?)', 'email', userId, u.email, subject, html, template, status);
+  await run('INSERT INTO outbox(channel,user_id,to_addr,subject,body,template,status) VALUES(?,?,?,?,?,?,?)', 'email', userId, u.email, subject, html, template, status);
 }
 
-function sms(userId, template, vars, { critical = false, toPhone } = {}) {
+async function sms(userId, template, vars, { critical = false, toPhone } = {}) {
   const p = prefsOf(userId);
   if (!p.sms_opt_in && !critical) return;
   let to = toPhone;
-  if (!to) { const u = one('SELECT phone_enc FROM users WHERE id = ?', userId); to = u?.phone_enc ? decrypt(u.phone_enc) : null; }
+  if (!to) { const u = await one('SELECT phone_enc FROM users WHERE id = ?', userId); to = u?.phone_enc ? decrypt(u.phone_enc) : null; }
   if (!to) return;
   const t = DLT_TEMPLATES[template]; if (!t) return;
   const body = t.text.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
-  run('INSERT INTO outbox(channel,user_id,to_addr,body,template,dlt_template_id,status) VALUES(?,?,?,?,?,?,?)', 'sms', userId, to, body, template, t.id, 'queued');
+  await run('INSERT INTO outbox(channel,user_id,to_addr,body,template,dlt_template_id,status) VALUES(?,?,?,?,?,?,?)', 'sms', userId, to, body, template, t.id, 'queued');
 }
 
 // One call for the common case.
@@ -71,28 +71,28 @@ const provider = {
   },
 };
 let working = false;
-function processOutbox(limit = 50) {
+async function processOutbox(limit = 50) {
   if (working) return 0; working = true; let n = 0;
   try {
-    for (const m of all("SELECT * FROM outbox WHERE status='queued' ORDER BY id LIMIT ?", limit)) {
-      try { provider.send(m); run("UPDATE outbox SET status='sent', attempts=attempts+1, sent_at=datetime('now') WHERE id=?", m.id); n++; }
-      catch (e) { run(`UPDATE outbox SET attempts=attempts+1, status=CASE WHEN attempts+1>=5 THEN 'failed' ELSE 'queued' END WHERE id=?`, m.id); }
+    for (const m of await all("SELECT * FROM outbox WHERE status='queued' ORDER BY id LIMIT ?", limit)) {
+      try { provider.send(m); await run("UPDATE outbox SET status='sent', attempts=attempts+1, sent_at=datetime('now') WHERE id=?", m.id); n++; }
+      catch (e) { await run(`UPDATE outbox SET attempts=attempts+1, status=CASE WHEN attempts+1>=5 THEN 'failed' ELSE 'queued' END WHERE id=?`, m.id); }
     }
   } finally { working = false; }
   return n;
 }
-function sendDigests() {
-  const groups = all("SELECT user_id, COUNT(*) c FROM outbox WHERE status='digest' AND channel='email' GROUP BY user_id");
-  const tx = db.transaction(() => {
+async function sendDigests() {
+  const groups = await all("SELECT user_id, COUNT(*) c FROM outbox WHERE status='digest' AND channel='email' GROUP BY user_id");
+  const tx = db.transaction(async () => {
     for (const g of groups) {
-      const items = all("SELECT id, subject FROM outbox WHERE status='digest' AND user_id=?", g.user_id);
-      const u = one('SELECT email, name FROM users WHERE id=?', g.user_id); if (!u) continue;
+      const items = await all("SELECT id, subject FROM outbox WHERE status='digest' AND user_id=?", g.user_id);
+      const u = await one('SELECT email, name FROM users WHERE id=?', g.user_id); if (!u) continue;
       const { subject, html } = EMAIL_TEMPLATES.digest({ name: u.name, items: items.map((i) => i.subject) });
-      run("INSERT INTO outbox(channel,user_id,to_addr,subject,body,template,status) VALUES('email',?,?,?,?, 'digest','queued')", g.user_id, u.email, subject, html);
-      run(`UPDATE outbox SET status='sent', sent_at=datetime('now') WHERE status='digest' AND user_id=?`, g.user_id);
+      await run("INSERT INTO outbox(channel,user_id,to_addr,subject,body,template,status) VALUES('email',?,?,?,?, 'digest','queued')", g.user_id, u.email, subject, html);
+      await run(`UPDATE outbox SET status='sent', sent_at=datetime('now') WHERE status='digest' AND user_id=?`, g.user_id);
     }
   });
-  tx();
+  await tx();
   return groups.length;
 }
 

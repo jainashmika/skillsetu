@@ -7,8 +7,8 @@ const insert = db.prepare(`INSERT INTO audit_logs(actor_id,actor_role,action,ent
                            VALUES(?,?,?,?,?,?,?,?,?,?)`);
 const payloadOf = (r) => JSON.stringify([r.actor_id, r.actor_role, r.action, r.entity, r.entity_id, r.details, r.ip, r.created_at]);
 
-const append = db.transaction((e) => {
-  const last = one('SELECT hash FROM audit_logs ORDER BY id DESC LIMIT 1');
+const append = db.transaction(async e => {
+  const last = await one('SELECT hash FROM audit_logs ORDER BY id DESC LIMIT 1');
   const prev = last ? last.hash : 'GENESIS';
   const row = {
     actor_id: e.actorId ?? null, actor_role: e.actorRole ?? null, action: e.action, entity: e.entity ?? null,
@@ -26,8 +26,8 @@ function audit(req, action, entity, entityId, details) {
   } catch (e) { console.error('[audit] failed', e.message); }
 }
 
-function verifyChain() {
-  const rows = all('SELECT * FROM audit_logs ORDER BY id');
+async function verifyChain() {
+  const rows = await all('SELECT * FROM audit_logs ORDER BY id');
   let prev = 'GENESIS';
   for (const r of rows) {
     if (r.prev_hash !== prev || sha256(prev + payloadOf(r)) !== r.hash) return { valid: false, brokenAt: r.id, total: rows.length };
