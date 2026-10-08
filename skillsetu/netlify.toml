@@ -10,7 +10,6 @@
 
 [functions]
   node_bundler = "zisi"
-  external_node_modules = ["better-sqlite3"]
   included_files = [
     "backend/src/db/schema.sql",
     "backend/node_modules/swagger-ui-dist/**",
