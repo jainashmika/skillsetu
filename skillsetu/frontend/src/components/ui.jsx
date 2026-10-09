@@ -155,11 +155,29 @@ export function JobCard({ job, onSave, showMatch = true }) {
           <span className="inline-flex items-center gap-1"><IndianRupee className="h-3.5 w-3.5" aria-hidden />{ctc(job.ctcMin, job.ctcMax)}</span>
           <span>{LABEL[job.contractType]}</span>
           {job.experienceMin > 0 ? <span>{job.experienceMin}+ yrs</span> : <span>Freshers welcome</span>}
+          {job.match?.fairnessHash && (
+            <span className="text-xs text-slate-400 font-mono tracking-tight flex items-center gap-1">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Audit ID: #{job.match.fairnessHash}
+            </span>
+          )}
         </div>
         <div className="mt-3 flex flex-wrap gap-1.5">{job.skills?.slice(0, 4).map((s) => <span key={s.id} className="chip">{s.name}</span>)}</div>
       </div>
       <div className="relative z-10 flex flex-col items-end justify-between gap-2">
-        {showMatch && job.match ? <MatchRing score={job.match.score} /> : <span className="text-xs text-ink-faint">{ago(job.publishedAt)}</span>}
+        <div className="flex flex-col items-end gap-1">
+          {showMatch && job.match ? <MatchRing score={job.match.score} /> : <span className="text-xs text-ink-faint">{ago(job.publishedAt)}</span>}
+          {showMatch && job.match?.matchedSkills?.length > 0 && (
+            <span className="text-[10px] bg-teal-50 text-teal-700 px-1.5 py-0.5 rounded border border-teal-100 whitespace-nowrap">
+              ✓ Overlap: {job.match.matchedSkills.slice(0, 2).join(', ')}
+            </span>
+          )}
+          {showMatch && job.match?.missingSkills?.length > 0 && (
+            <span className="text-[10px] bg-amber-50 text-amber-700 px-1.5 py-0.5 rounded border border-amber-100 whitespace-nowrap">
+              + Add {job.match.missingSkills.slice(0, 2).join(', ')} to boost score
+            </span>
+          )}
+        </div>
         {onSave && (
           <button onClick={() => onSave(job)} className="btn-ghost p-2" aria-label={job.saved ? 'Remove from saved' : 'Save job'} aria-pressed={!!job.saved}>
             {job.saved ? <BookmarkCheck className="h-5 w-5 text-teal-600" /> : <Bookmark className="h-5 w-5" />}
