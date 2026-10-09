@@ -2,6 +2,7 @@
 // skills (taxonomy overlap + TF-IDF semantic similarity), education, experience, location, salary.
 // Weights and the threshold come from admin settings and are applied at query time.
 const { all, json } = require('../../db');
+const crypto = require('crypto');
 const settings = require('../settings');
 const taxonomy = require('../taxonomy');
 const metrics = require('../metrics');
@@ -139,7 +140,24 @@ function scorePair(seeker, job, ctx = {}) {
   if (parts.location.score < 0.5) gaps.push('Located in a different region');
   if (parts.salary.score < 1 && parts.salary.reason !== 'Salary not specified') gaps.push(parts.salary.reason);
   const breakdown = Object.fromEntries(Object.entries(parts).map(([k, v]) => [k, { ...v, score: Math.round(v.score * 100), weight: Math.round((w[k] || 0) * 100) }]));
-  return { score, breakdown, strengths, gaps, confidence: Math.round((filled / 6) * 100) / 100, aboveThreshold: score >= settings.get('match_threshold') };
+  
+  const fairnessHash = crypto
+    .createHash('sha256')
+    .update(`${seeker.id || seeker.user_id}:${job.id}:${score}`)
+    .digest('hex')
+    .slice(0, 8);
+
+  return {
+    score,
+    breakdown,
+    strengths,
+    gaps,
+    confidence: Math.round((filled / 6) * 100) / 100,
+    aboveThreshold: score >= settings.get('match_threshold'),
+    matchedSkills: parts.skills.matched || [],
+    missingSkills: (parts.skills.missing || []).slice(0, 3),
+    fairnessHash: `fair-${fairnessHash}`
+  };
 }
 
 // KNN-style retrieval: shortlist candidates through the inverted skill index and TF-IDF neighbours,
