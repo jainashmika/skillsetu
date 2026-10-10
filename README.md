@@ -85,48 +85,124 @@ SkillSetu's algorithmic core relies on deterministic mathematics, domain taxonom
 ### Matching Engine (TF-IDF & Vector Space)
 Candidate profiling and job descriptions are transformed into multi-dimensional vectors using a Term Frequency-Inverse Document Frequency (TF-IDF) representation over a corpus of active jobs.
 
-1. **Tokenization and Document Frequency Ingestion**:
-   Text fields (job titles, descriptions, candidate headline, experiences, education, and skills) are parsed, case-normalized, and tokenized into distinct lexical terms. The document frequency $\text{df}(t)$ is maintained across active documents:
-   $$\text{idf}(t) = \ln\left(\frac{N + 1}{\text{df}(t) + 1}\right) + 1$$
-   where $N$ represents the total indexed corpus size.
+#### 1. Tokenization and Document Frequency Ingestion
+Text fields (job titles, descriptions, candidate headline, experiences, education, and skills) are parsed, case-normalized, and tokenized into distinct lexical terms. The document frequency $`\text{df}(t)`$ is maintained across active documents:
 
-2. **Sub-linear TF Scaling and L2 Normalization**:
-   For any text segment with term occurrences $c$, term frequency weights are scaled logarithmically:
-   $$w_t = (1 + \ln(c)) \times \text{idf}(t)$$
-   The resulting sparse vector $\mathbf{v}$ is normalized via Euclidean norm ($L_2$ norm):
-   $$\mathbf{\hat{v}} = \frac{\mathbf{v}}{\|\mathbf{v}\|_2} = \frac{\mathbf{v}}{\sqrt{\sum_{t} w_t^2}}$$
+$$
+\text{idf}(t) = \ln\left(\frac{N + 1}{\text{df}(t) + 1}\right) + 1
+$$
 
-3. **Cosine Similarity Evaluation**:
-   Given normalized candidate vector $\mathbf{\hat{s}}$ and job vector $\mathbf{\hat{j}}$, cosine similarity is computed in $O(\min(|\mathbf{s}|, |\mathbf{j}|))$ time using hash map intersection:
-   $$\text{Cosine}(\mathbf{\hat{s}}, \mathbf{\hat{j}}) = \sum_{t \in \mathbf{\hat{s}} \cap \mathbf{\hat{j}}} \mathbf{\hat{s}}[t] \times \mathbf{\hat{j}}[t]$$
+where $`N`$ represents the total indexed corpus size.
 
-4. **Multi-Factor Composite Scoring Formula**:
-   The final alignment percentage is computed as an affine combination of five normalized sub-scores governed by configurable administrative weights:
-   $$S_{\text{total}} = \sum_{k \in \mathcal{K}} w_k \cdot S_k, \quad \mathcal{K} = \{\text{skills}, \text{education}, \text{experience}, \text{location}, \text{salary}\}$$
-   - **Skills Component ($S_{\text{skills}}$)**: Evaluates exact taxonomy overlap (weight 1.0 for mandatory, 0.5 for optional, 0.25 for category affinity) blended with semantic cosine similarity:
-     $$S_{\text{skills}} = 0.8 \times \text{Coverage} + 0.2 \times \min(1.0, 2.0 \times \text{Cosine})$$
-   - **Education Component ($S_{\text{edu}}$)**: Stepwise tier distance degradation based on Indian national qualification frameworks:
-     $$S_{\text{edu}} = \begin{cases} 1.0 & \text{if } \Delta \le 0 \\ 0.6 & \text{if } \Delta = 1 \\ 0.3 & \text{if } \Delta = 2 \\ 0.0 & \text{otherwise} \end{cases} \quad \text{where } \Delta = \text{Level}_{\text{required}} - \text{Level}_{\text{candidate}}$$
-   - **Experience Component ($S_{\text{exp}}$)**: Linear ramp penalty for under-qualification and a mild 0.75 floor for over-qualification ($> 2$ years beyond maximum).
-   - **Location Component ($S_{\text{loc}}$)**: Remote parity (1.0), preferred city match (1.0), open relocation (0.85), same state (0.60 to 0.70), inter-state disparity (0.15 to 0.30).
-   - **Salary Component ($S_{\text{sal}}$)**: Quadratic penalty for compensation below minimum expectations: $(\text{Offer} / \text{Expected})^2$.
+#### 2. Sub-linear TF Scaling and L2 Normalization
+For any text segment with term occurrences $`c`$, term frequency weights are scaled logarithmically:
+
+$$
+w_t = (1 + \ln(c)) \times \text{idf}(t)
+$$
+
+The resulting sparse vector $`\mathbf{v}`$ is normalized via Euclidean norm ($`L_2`$ norm):
+
+$$
+\mathbf{\hat{v}} = \frac{\mathbf{v}}{\|\mathbf{v}\|_2} = \frac{\mathbf{v}}{\sqrt{\sum_{t} w_t^2}}
+$$
+
+#### 3. Cosine Similarity Evaluation
+Given normalized candidate vector $`\mathbf{\hat{s}}`$ and job vector $`\mathbf{\hat{j}}`$, cosine similarity is computed in $O(\min(|\mathbf{s}|, |\mathbf{j}|))$ time using hash map intersection:
+
+$$
+\text{Cosine}(\mathbf{\hat{s}}, \mathbf{\hat{j}}) = \sum_{t \in \mathbf{\hat{s}} \cap \mathbf{\hat{j}}} \mathbf{\hat{s}}[t] \times \mathbf{\hat{j}}[t]
+$$
+
+#### 4. Multi-Factor Composite Scoring Formula
+The final alignment percentage is computed as an affine combination of five normalized sub-scores governed by configurable administrative weights:
+
+$$
+S_{\text{total}} = \sum_{k \in \mathcal{K}} w_k \cdot S_k, \quad \mathcal{K} = \{\text{skills}, \text{education}, \text{experience}, \text{location}, \text{salary}\}
+$$
+
+The five sub-components are evaluated as follows:
+
+- **Skills Component** ($`S_{\text{skills}}`$): Evaluates exact taxonomy overlap (weight 1.0 for mandatory, 0.5 for optional, 0.25 for category affinity) blended with semantic cosine similarity:
+
+$$
+S_{\text{skills}} = 0.8 \times \text{Coverage} + 0.2 \times \min(1.0, 2.0 \times \text{Cosine})
+$$
+
+- **Education Component** ($`S_{\text{edu}}`$): Stepwise tier distance degradation based on Indian national qualification frameworks:
+
+$$
+S_{\text{edu}} = \begin{cases}
+1.0 & \text{if } \Delta \le 0 \\
+0.6 & \text{if } \Delta = 1 \\
+0.3 & \text{if } \Delta = 2 \\
+0.0 & \text{otherwise}
+\end{cases}
+$$
+
+where $`\Delta = \text{Level}_{\text{required}} - \text{Level}_{\text{candidate}}`$.
+
+- **Experience Component** ($`S_{\text{exp}}`$): Linear ramp penalty for under-qualification and a mild 0.75 floor for over-qualification ($> 2$ years beyond maximum).
+
+- **Location Component** ($`S_{\text{loc}}`$): Remote parity (1.0), preferred city match (1.0), open relocation (0.85), same state (0.60 to 0.70), inter-state disparity (0.15 to 0.30).
+
+- **Salary Component** ($`S_{\text{sal}}`$): Quadratic penalty for compensation below minimum expectations:
+
+$$
+S_{\text{sal}} = \left(\frac{\text{Offer}}{\text{Expected}}\right)^2
+$$
 
 ### Explainable AI (XAI) Attribution
 In compliance with algorithmic transparency mandates, SkillSetu generates granular diagnostic breakdowns alongside numeric scores:
-- **Set Intersection Isolation**: Identifies the explicit intersection array $\mathcal{S}_{\text{matched}} = \mathcal{S}_{\text{candidate}} \cap \mathcal{S}_{\text{job}}$ and displays exact match badges to users.
-- **Deficit Extraction**: Detects the difference set $\mathcal{S}_{\text{missing}} = \mathcal{S}_{\text{job, required}} \setminus \mathcal{S}_{\text{candidate}}$.
+
+- **Set Intersection Isolation**: Identifies the explicit intersection array between candidate skills and job requirements:
+
+$$
+\mathcal{S}_{\text{matched}} = \mathcal{S}_{\text{candidate}} \cap \mathcal{S}_{\text{job}}
+$$
+
+and displays exact match badges to users in the interface.
+
+- **Deficit Extraction**: Detects the difference set isolating missing mandatory qualifications:
+
+$$
+\mathcal{S}_{\text{missing}} = \mathcal{S}_{\text{job, required}} \setminus \mathcal{S}_{\text{candidate}}
+$$
+
 - **Dynamic Optimization Directives**: The scoring loop dynamically synthesizes actionable recommendations (such as "Add [Skill Name] to boost score" targeting "Skills to reach 95% match"), giving applicants clear instructions on qualification gaps.
+
 - **Factor Attribution Breakdown**: Emits explicit percentage values and textual justifications for all 5 sub-factors.
 
 ### Algorithmic Fairness Determinism Hash
 To guarantee tamper-evident auditing and confirm that evaluations are purely deterministic without runtime bias or drift:
-1. Candidate unique identifier, job unique identifier, and the calculated match score are serialized into a delimited string:
-   $$\text{Payload} = \text{SeekerID} \mathbin{\Vert} \text{":"} \mathbin{\Vert} \text{JobID} \mathbin{\Vert} \text{":"} \mathbin{\Vert} \text{Score}$$
-2. The Node.js `crypto` module generates a cryptographic SHA-256 digest:
-   $$\text{Digest} = \text{SHA-256}(\text{Payload})$$
-3. The leading 8 hexadecimal characters are truncated and prefixed to form a unique, reproducible audit token:
-   $$\text{FairnessHash} = \text{"fair-"} \mathbin{\Vert} \text{Digest}[0..7]$$
-4. Any external compliance auditor can independently re-hash the candidate ID, job ID, and score to verify score integrity.
+
+1. **Payload Serialization**: The candidate unique identifier, job unique identifier, and calculated match score are serialized into a delimited string:
+
+$$
+\text{Payload} = \text{SeekerID} \parallel \text{":"} \parallel \text{JobID} \parallel \text{":"} \parallel \text{Score}
+$$
+
+2. **Cryptographic Digest**: The Node.js `crypto` module generates a cryptographic SHA-256 digest:
+
+$$
+\text{Digest} = \text{SHA-256}(\text{Payload})
+$$
+
+3. **Audit Token Generation**: The leading 8 hexadecimal characters are truncated and prefixed to form a unique, reproducible audit token:
+
+$$
+\text{FairnessHash} = \text{"fair-"} \parallel \text{Digest}[0..7]
+$$
+
+```javascript
+const fairnessHash = crypto
+  .createHash('sha256')
+  .update(`${seeker.id || seeker.user_id}:${job.id}:${score}`)
+  .digest('hex')
+  .slice(0, 8);
+```
+
+4. **Independent Verification**: Any external compliance auditor can independently re-hash the candidate ID, job ID, and score to verify score integrity without needing access to private internal state.
 
 ### Data Flow Diagram
 
