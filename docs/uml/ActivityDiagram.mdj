@@ -1,0 +1,628 @@
+{
+  "_type": "Project",
+  "_id": "AAAAAAG0000e6_proj",
+  "name": "SkillSetu - Matching Execution Loop",
+  "ownedElements": [
+    {
+      "_type": "UMLModel",
+      "_id": "AAAAAAG0000e7_model",
+      "_parent": {
+        "$ref": "AAAAAAG0000e6_proj"
+      },
+      "name": "ActivityModel",
+      "ownedElements": [
+        {
+          "_type": "UMLActivity",
+          "_id": "AAAAAAG0000e8_act",
+          "_parent": {
+            "$ref": "AAAAAAG0000e7_model"
+          },
+          "name": "SynchronousMatchLoop",
+          "nodes": [
+            {
+              "_type": "UMLInitialNode",
+              "_id": "AAAAAAG0000ea_node",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "InitialNode"
+            },
+            {
+              "_type": "UMLAction",
+              "_id": "AAAAAAG0000ec_node",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "Fetch Seeker Profile"
+            },
+            {
+              "_type": "UMLAction",
+              "_id": "AAAAAAG0000ee_node",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "Fetch Job Corpus"
+            },
+            {
+              "_type": "UMLAction",
+              "_id": "AAAAAAG0000f0_node",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "Vectorize Requirements (TF-IDF)"
+            },
+            {
+              "_type": "UMLAction",
+              "_id": "AAAAAAG0000f2_node",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "Compute Cosine Similarity"
+            },
+            {
+              "_type": "UMLAction",
+              "_id": "AAAAAAG0000f4_node",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "Extract XAI Skill Gaps"
+            },
+            {
+              "_type": "UMLAction",
+              "_id": "AAAAAAG0000f6_node",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "Generate SHA-256 Fairness Hash"
+            },
+            {
+              "_type": "UMLAction",
+              "_id": "AAAAAAG0000f8_node",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "Construct JSON Payload"
+            },
+            {
+              "_type": "UMLActivityFinalNode",
+              "_id": "AAAAAAG0000fa_node",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "ActivityFinalNode"
+            }
+          ],
+          "edges": [
+            {
+              "_type": "UMLControlFlow",
+              "_id": "AAAAAAG0000fc_edge",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "",
+              "source": {
+                "$ref": "AAAAAAG0000ea_node"
+              },
+              "target": {
+                "$ref": "AAAAAAG0000ec_node"
+              }
+            },
+            {
+              "_type": "UMLControlFlow",
+              "_id": "AAAAAAG0000fe_edge",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "",
+              "source": {
+                "$ref": "AAAAAAG0000ec_node"
+              },
+              "target": {
+                "$ref": "AAAAAAG0000ee_node"
+              }
+            },
+            {
+              "_type": "UMLControlFlow",
+              "_id": "AAAAAAG000100_edge",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "",
+              "source": {
+                "$ref": "AAAAAAG0000ee_node"
+              },
+              "target": {
+                "$ref": "AAAAAAG0000f0_node"
+              }
+            },
+            {
+              "_type": "UMLControlFlow",
+              "_id": "AAAAAAG000102_edge",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "",
+              "source": {
+                "$ref": "AAAAAAG0000f0_node"
+              },
+              "target": {
+                "$ref": "AAAAAAG0000f2_node"
+              }
+            },
+            {
+              "_type": "UMLControlFlow",
+              "_id": "AAAAAAG000104_edge",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "",
+              "source": {
+                "$ref": "AAAAAAG0000f2_node"
+              },
+              "target": {
+                "$ref": "AAAAAAG0000f4_node"
+              }
+            },
+            {
+              "_type": "UMLControlFlow",
+              "_id": "AAAAAAG000106_edge",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "",
+              "source": {
+                "$ref": "AAAAAAG0000f4_node"
+              },
+              "target": {
+                "$ref": "AAAAAAG0000f6_node"
+              }
+            },
+            {
+              "_type": "UMLControlFlow",
+              "_id": "AAAAAAG000108_edge",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "",
+              "source": {
+                "$ref": "AAAAAAG0000f6_node"
+              },
+              "target": {
+                "$ref": "AAAAAAG0000f8_node"
+              }
+            },
+            {
+              "_type": "UMLControlFlow",
+              "_id": "AAAAAAG00010a_edge",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "",
+              "source": {
+                "$ref": "AAAAAAG0000f8_node"
+              },
+              "target": {
+                "$ref": "AAAAAAG0000fa_node"
+              }
+            }
+          ],
+          "ownedElements": [
+            {
+              "_type": "UMLActivityDiagram",
+              "_id": "AAAAAAG0000e9_diag",
+              "_parent": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "name": "Synchronous AI Matching Execution Loop",
+              "visible": true,
+              "defaultFor": {
+                "$ref": "AAAAAAG0000e8_act"
+              },
+              "ownedViews": [
+                {
+                  "_type": "UMLControlNodeView",
+                  "_id": "AAAAAAG0000eb_nodev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG0000ea_node"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 440,
+                  "top": 40,
+                  "width": 20,
+                  "height": 20
+                },
+                {
+                  "_type": "UMLActionView",
+                  "_id": "AAAAAAG0000ed_nodev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG0000ec_node"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 340,
+                  "top": 110,
+                  "width": 220,
+                  "height": 50,
+                  "nameLabel": {
+                    "_type": "UMLNameCompartmentView",
+                    "_id": "AAAAAAG00010c_nc",
+                    "_parent": {
+                      "$ref": "AAAAAAG0000ed_nodev"
+                    },
+                    "model": {
+                      "$ref": "AAAAAAG0000ec_node"
+                    },
+                    "font": "Arial;13;0",
+                    "left": 350,
+                    "top": 125,
+                    "width": 200,
+                    "height": 20,
+                    "text": "Fetch Seeker Profile"
+                  }
+                },
+                {
+                  "_type": "UMLActionView",
+                  "_id": "AAAAAAG0000ef_nodev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG0000ee_node"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 340,
+                  "top": 200,
+                  "width": 220,
+                  "height": 50,
+                  "nameLabel": {
+                    "_type": "UMLNameCompartmentView",
+                    "_id": "AAAAAAG00010d_nc",
+                    "_parent": {
+                      "$ref": "AAAAAAG0000ef_nodev"
+                    },
+                    "model": {
+                      "$ref": "AAAAAAG0000ee_node"
+                    },
+                    "font": "Arial;13;0",
+                    "left": 350,
+                    "top": 215,
+                    "width": 200,
+                    "height": 20,
+                    "text": "Fetch Job Corpus"
+                  }
+                },
+                {
+                  "_type": "UMLActionView",
+                  "_id": "AAAAAAG0000f1_nodev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG0000f0_node"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 320,
+                  "top": 290,
+                  "width": 260,
+                  "height": 50,
+                  "nameLabel": {
+                    "_type": "UMLNameCompartmentView",
+                    "_id": "AAAAAAG00010e_nc",
+                    "_parent": {
+                      "$ref": "AAAAAAG0000f1_nodev"
+                    },
+                    "model": {
+                      "$ref": "AAAAAAG0000f0_node"
+                    },
+                    "font": "Arial;13;0",
+                    "left": 330,
+                    "top": 305,
+                    "width": 240,
+                    "height": 20,
+                    "text": "Vectorize Requirements (TF-IDF)"
+                  }
+                },
+                {
+                  "_type": "UMLActionView",
+                  "_id": "AAAAAAG0000f3_nodev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG0000f2_node"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 330,
+                  "top": 380,
+                  "width": 240,
+                  "height": 50,
+                  "nameLabel": {
+                    "_type": "UMLNameCompartmentView",
+                    "_id": "AAAAAAG00010f_nc",
+                    "_parent": {
+                      "$ref": "AAAAAAG0000f3_nodev"
+                    },
+                    "model": {
+                      "$ref": "AAAAAAG0000f2_node"
+                    },
+                    "font": "Arial;13;0",
+                    "left": 340,
+                    "top": 395,
+                    "width": 220,
+                    "height": 20,
+                    "text": "Compute Cosine Similarity"
+                  }
+                },
+                {
+                  "_type": "UMLActionView",
+                  "_id": "AAAAAAG0000f5_nodev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG0000f4_node"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 340,
+                  "top": 470,
+                  "width": 220,
+                  "height": 50,
+                  "nameLabel": {
+                    "_type": "UMLNameCompartmentView",
+                    "_id": "AAAAAAG000110_nc",
+                    "_parent": {
+                      "$ref": "AAAAAAG0000f5_nodev"
+                    },
+                    "model": {
+                      "$ref": "AAAAAAG0000f4_node"
+                    },
+                    "font": "Arial;13;0",
+                    "left": 350,
+                    "top": 485,
+                    "width": 200,
+                    "height": 20,
+                    "text": "Extract XAI Skill Gaps"
+                  }
+                },
+                {
+                  "_type": "UMLActionView",
+                  "_id": "AAAAAAG0000f7_nodev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG0000f6_node"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 310,
+                  "top": 560,
+                  "width": 280,
+                  "height": 50,
+                  "nameLabel": {
+                    "_type": "UMLNameCompartmentView",
+                    "_id": "AAAAAAG000111_nc",
+                    "_parent": {
+                      "$ref": "AAAAAAG0000f7_nodev"
+                    },
+                    "model": {
+                      "$ref": "AAAAAAG0000f6_node"
+                    },
+                    "font": "Arial;13;0",
+                    "left": 320,
+                    "top": 575,
+                    "width": 260,
+                    "height": 20,
+                    "text": "Generate SHA-256 Fairness Hash"
+                  }
+                },
+                {
+                  "_type": "UMLActionView",
+                  "_id": "AAAAAAG0000f9_nodev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG0000f8_node"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 330,
+                  "top": 650,
+                  "width": 240,
+                  "height": 50,
+                  "nameLabel": {
+                    "_type": "UMLNameCompartmentView",
+                    "_id": "AAAAAAG000112_nc",
+                    "_parent": {
+                      "$ref": "AAAAAAG0000f9_nodev"
+                    },
+                    "model": {
+                      "$ref": "AAAAAAG0000f8_node"
+                    },
+                    "font": "Arial;13;0",
+                    "left": 340,
+                    "top": 665,
+                    "width": 220,
+                    "height": 20,
+                    "text": "Construct JSON Payload"
+                  }
+                },
+                {
+                  "_type": "UMLControlNodeView",
+                  "_id": "AAAAAAG0000fb_nodev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG0000fa_node"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 437,
+                  "top": 740,
+                  "width": 26,
+                  "height": 26
+                },
+                {
+                  "_type": "UMLControlFlowView",
+                  "_id": "AAAAAAG0000fd_edgev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG0000fc_edge"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG0000ed_nodev"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG0000eb_nodev"
+                  },
+                  "lineStyle": 1,
+                  "points": "450,60;450,110"
+                },
+                {
+                  "_type": "UMLControlFlowView",
+                  "_id": "AAAAAAG0000ff_edgev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG0000fe_edge"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG0000ef_nodev"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG0000ed_nodev"
+                  },
+                  "lineStyle": 1,
+                  "points": "450,160;450,200"
+                },
+                {
+                  "_type": "UMLControlFlowView",
+                  "_id": "AAAAAAG000101_edgev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG000100_edge"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG0000f1_nodev"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG0000ef_nodev"
+                  },
+                  "lineStyle": 1,
+                  "points": "450,250;450,290"
+                },
+                {
+                  "_type": "UMLControlFlowView",
+                  "_id": "AAAAAAG000103_edgev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG000102_edge"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG0000f3_nodev"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG0000f1_nodev"
+                  },
+                  "lineStyle": 1,
+                  "points": "450,340;450,380"
+                },
+                {
+                  "_type": "UMLControlFlowView",
+                  "_id": "AAAAAAG000105_edgev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG000104_edge"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG0000f5_nodev"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG0000f3_nodev"
+                  },
+                  "lineStyle": 1,
+                  "points": "450,430;450,470"
+                },
+                {
+                  "_type": "UMLControlFlowView",
+                  "_id": "AAAAAAG000107_edgev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG000106_edge"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG0000f7_nodev"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG0000f5_nodev"
+                  },
+                  "lineStyle": 1,
+                  "points": "450,520;450,560"
+                },
+                {
+                  "_type": "UMLControlFlowView",
+                  "_id": "AAAAAAG000109_edgev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG000108_edge"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG0000f9_nodev"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG0000f7_nodev"
+                  },
+                  "lineStyle": 1,
+                  "points": "450,610;450,650"
+                },
+                {
+                  "_type": "UMLControlFlowView",
+                  "_id": "AAAAAAG00010b_edgev",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000e9_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG00010a_edge"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG0000fb_nodev"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG0000f9_nodev"
+                  },
+                  "lineStyle": 1,
+                  "points": "450,700;450,740"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

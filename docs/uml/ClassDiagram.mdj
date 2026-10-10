@@ -1,0 +1,1901 @@
+{
+  "_type": "Project",
+  "_id": "AAAAAAG00003c_proj",
+  "name": "SkillSetu - Class Architecture",
+  "ownedElements": [
+    {
+      "_type": "UMLModel",
+      "_id": "AAAAAAG00003d_model",
+      "_parent": {
+        "$ref": "AAAAAAG00003c_proj"
+      },
+      "name": "ClassModel",
+      "ownedElements": [
+        {
+          "_type": "UMLClassDiagram",
+          "_id": "AAAAAAG00003e_diag",
+          "_parent": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "name": "SkillSetu Class Architecture",
+          "visible": true,
+          "defaultFor": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "ownedViews": [
+            {
+              "_type": "UMLClassView",
+              "_id": "AAAAAAG000040_clsv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG00003f_cls"
+              },
+              "font": "Arial;13;0",
+              "left": 450,
+              "top": 40,
+              "width": 260,
+              "height": 160,
+              "nameCompartment": {
+                "_type": "UMLNameCompartmentView",
+                "_id": "AAAAAAG0000d1_nc",
+                "_parent": {
+                  "$ref": "AAAAAAG000040_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG00003f_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 450,
+                "top": 40,
+                "width": 260,
+                "height": 25,
+                "text": "User"
+              },
+              "attributeCompartment": {
+                "_type": "UMLAttributeCompartmentView",
+                "_id": "AAAAAAG0000d2_ac",
+                "_parent": {
+                  "$ref": "AAAAAAG000040_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG00003f_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 450,
+                "top": 65,
+                "width": 260,
+                "height": 60
+              },
+              "operationCompartment": {
+                "_type": "UMLOperationCompartmentView",
+                "_id": "AAAAAAG0000d3_oc",
+                "_parent": {
+                  "$ref": "AAAAAAG000040_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG00003f_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 450,
+                "top": 125,
+                "width": 260,
+                "height": 60
+              }
+            },
+            {
+              "_type": "UMLClassView",
+              "_id": "AAAAAAG000042_clsv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG000041_cls"
+              },
+              "font": "Arial;13;0",
+              "left": 80,
+              "top": 260,
+              "width": 290,
+              "height": 180,
+              "nameCompartment": {
+                "_type": "UMLNameCompartmentView",
+                "_id": "AAAAAAG0000d4_nc",
+                "_parent": {
+                  "$ref": "AAAAAAG000042_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000041_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 80,
+                "top": 260,
+                "width": 290,
+                "height": 25,
+                "text": "SeekerProfile"
+              },
+              "attributeCompartment": {
+                "_type": "UMLAttributeCompartmentView",
+                "_id": "AAAAAAG0000d5_ac",
+                "_parent": {
+                  "$ref": "AAAAAAG000042_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000041_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 80,
+                "top": 285,
+                "width": 290,
+                "height": 60
+              },
+              "operationCompartment": {
+                "_type": "UMLOperationCompartmentView",
+                "_id": "AAAAAAG0000d6_oc",
+                "_parent": {
+                  "$ref": "AAAAAAG000042_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000041_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 80,
+                "top": 345,
+                "width": 290,
+                "height": 60
+              }
+            },
+            {
+              "_type": "UMLClassView",
+              "_id": "AAAAAAG000044_clsv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG000043_cls"
+              },
+              "font": "Arial;13;0",
+              "left": 450,
+              "top": 260,
+              "width": 280,
+              "height": 180,
+              "nameCompartment": {
+                "_type": "UMLNameCompartmentView",
+                "_id": "AAAAAAG0000d7_nc",
+                "_parent": {
+                  "$ref": "AAAAAAG000044_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000043_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 450,
+                "top": 260,
+                "width": 280,
+                "height": 25,
+                "text": "EmployerProfile"
+              },
+              "attributeCompartment": {
+                "_type": "UMLAttributeCompartmentView",
+                "_id": "AAAAAAG0000d8_ac",
+                "_parent": {
+                  "$ref": "AAAAAAG000044_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000043_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 450,
+                "top": 285,
+                "width": 280,
+                "height": 60
+              },
+              "operationCompartment": {
+                "_type": "UMLOperationCompartmentView",
+                "_id": "AAAAAAG0000d9_oc",
+                "_parent": {
+                  "$ref": "AAAAAAG000044_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000043_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 450,
+                "top": 345,
+                "width": 280,
+                "height": 60
+              }
+            },
+            {
+              "_type": "UMLClassView",
+              "_id": "AAAAAAG000046_clsv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG000045_cls"
+              },
+              "font": "Arial;13;0",
+              "left": 810,
+              "top": 260,
+              "width": 300,
+              "height": 190,
+              "nameCompartment": {
+                "_type": "UMLNameCompartmentView",
+                "_id": "AAAAAAG0000da_nc",
+                "_parent": {
+                  "$ref": "AAAAAAG000046_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000045_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 810,
+                "top": 260,
+                "width": 300,
+                "height": 25,
+                "text": "JobPosting"
+              },
+              "attributeCompartment": {
+                "_type": "UMLAttributeCompartmentView",
+                "_id": "AAAAAAG0000db_ac",
+                "_parent": {
+                  "$ref": "AAAAAAG000046_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000045_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 810,
+                "top": 285,
+                "width": 300,
+                "height": 60
+              },
+              "operationCompartment": {
+                "_type": "UMLOperationCompartmentView",
+                "_id": "AAAAAAG0000dc_oc",
+                "_parent": {
+                  "$ref": "AAAAAAG000046_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000045_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 810,
+                "top": 345,
+                "width": 300,
+                "height": 60
+              }
+            },
+            {
+              "_type": "UMLClassView",
+              "_id": "AAAAAAG000048_clsv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG000047_cls"
+              },
+              "font": "Arial;13;0",
+              "left": 420,
+              "top": 520,
+              "width": 340,
+              "height": 190,
+              "nameCompartment": {
+                "_type": "UMLNameCompartmentView",
+                "_id": "AAAAAAG0000dd_nc",
+                "_parent": {
+                  "$ref": "AAAAAAG000048_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000047_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 420,
+                "top": 520,
+                "width": 340,
+                "height": 25,
+                "text": "MatchEngine"
+              },
+              "attributeCompartment": {
+                "_type": "UMLAttributeCompartmentView",
+                "_id": "AAAAAAG0000de_ac",
+                "_parent": {
+                  "$ref": "AAAAAAG000048_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000047_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 420,
+                "top": 545,
+                "width": 340,
+                "height": 60
+              },
+              "operationCompartment": {
+                "_type": "UMLOperationCompartmentView",
+                "_id": "AAAAAAG0000df_oc",
+                "_parent": {
+                  "$ref": "AAAAAAG000048_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000047_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 420,
+                "top": 605,
+                "width": 340,
+                "height": 60
+              }
+            },
+            {
+              "_type": "UMLClassView",
+              "_id": "AAAAAAG00004a_clsv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG000049_cls"
+              },
+              "font": "Arial;13;0",
+              "left": 80,
+              "top": 780,
+              "width": 350,
+              "height": 170,
+              "nameCompartment": {
+                "_type": "UMLNameCompartmentView",
+                "_id": "AAAAAAG0000e0_nc",
+                "_parent": {
+                  "$ref": "AAAAAAG00004a_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000049_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 80,
+                "top": 780,
+                "width": 350,
+                "height": 25,
+                "text": "XAIProcessor"
+              },
+              "attributeCompartment": {
+                "_type": "UMLAttributeCompartmentView",
+                "_id": "AAAAAAG0000e1_ac",
+                "_parent": {
+                  "$ref": "AAAAAAG00004a_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000049_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 80,
+                "top": 805,
+                "width": 350,
+                "height": 60
+              },
+              "operationCompartment": {
+                "_type": "UMLOperationCompartmentView",
+                "_id": "AAAAAAG0000e2_oc",
+                "_parent": {
+                  "$ref": "AAAAAAG00004a_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG000049_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 80,
+                "top": 865,
+                "width": 350,
+                "height": 60
+              }
+            },
+            {
+              "_type": "UMLClassView",
+              "_id": "AAAAAAG00004c_clsv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG00004b_cls"
+              },
+              "font": "Arial;13;0",
+              "left": 740,
+              "top": 780,
+              "width": 360,
+              "height": 160,
+              "nameCompartment": {
+                "_type": "UMLNameCompartmentView",
+                "_id": "AAAAAAG0000e3_nc",
+                "_parent": {
+                  "$ref": "AAAAAAG00004c_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG00004b_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 740,
+                "top": 780,
+                "width": 360,
+                "height": 25,
+                "text": "AuditHashGenerator"
+              },
+              "attributeCompartment": {
+                "_type": "UMLAttributeCompartmentView",
+                "_id": "AAAAAAG0000e4_ac",
+                "_parent": {
+                  "$ref": "AAAAAAG00004c_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG00004b_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 740,
+                "top": 805,
+                "width": 360,
+                "height": 60
+              },
+              "operationCompartment": {
+                "_type": "UMLOperationCompartmentView",
+                "_id": "AAAAAAG0000e5_oc",
+                "_parent": {
+                  "$ref": "AAAAAAG00004c_clsv"
+                },
+                "model": {
+                  "$ref": "AAAAAAG00004b_cls"
+                },
+                "font": "Arial;13;0",
+                "left": 740,
+                "top": 865,
+                "width": 360,
+                "height": 60
+              }
+            },
+            {
+              "_type": "UMLGeneralizationView",
+              "_id": "AAAAAAG00004e_genv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG00004d_gen"
+              },
+              "font": "Arial;13;0",
+              "headEnd": {
+                "$ref": "AAAAAAG000040_clsv"
+              },
+              "tailEnd": {
+                "$ref": "AAAAAAG000042_clsv"
+              },
+              "lineStyle": 1,
+              "points": "225,260;580,200"
+            },
+            {
+              "_type": "UMLGeneralizationView",
+              "_id": "AAAAAAG000050_genv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG00004f_gen"
+              },
+              "font": "Arial;13;0",
+              "headEnd": {
+                "$ref": "AAAAAAG000040_clsv"
+              },
+              "tailEnd": {
+                "$ref": "AAAAAAG000044_clsv"
+              },
+              "lineStyle": 1,
+              "points": "590,260;580,200"
+            },
+            {
+              "_type": "UMLAssociationView",
+              "_id": "AAAAAAG000052_ascv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG000051_asc"
+              },
+              "font": "Arial;13;0",
+              "headEnd": {
+                "$ref": "AAAAAAG000046_clsv"
+              },
+              "tailEnd": {
+                "$ref": "AAAAAAG000044_clsv"
+              },
+              "lineStyle": 1,
+              "points": "590,350;960,355"
+            },
+            {
+              "_type": "UMLAssociationView",
+              "_id": "AAAAAAG000054_ascv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG000053_asc"
+              },
+              "font": "Arial;13;0",
+              "headEnd": {
+                "$ref": "AAAAAAG00004a_clsv"
+              },
+              "tailEnd": {
+                "$ref": "AAAAAAG000048_clsv"
+              },
+              "lineStyle": 1,
+              "points": "590,615;255,865"
+            },
+            {
+              "_type": "UMLAssociationView",
+              "_id": "AAAAAAG000056_ascv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG000055_asc"
+              },
+              "font": "Arial;13;0",
+              "headEnd": {
+                "$ref": "AAAAAAG00004c_clsv"
+              },
+              "tailEnd": {
+                "$ref": "AAAAAAG000048_clsv"
+              },
+              "lineStyle": 1,
+              "points": "590,615;920,860"
+            },
+            {
+              "_type": "UMLAssociationView",
+              "_id": "AAAAAAG000058_ascv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG000057_asc"
+              },
+              "font": "Arial;13;0",
+              "headEnd": {
+                "$ref": "AAAAAAG000042_clsv"
+              },
+              "tailEnd": {
+                "$ref": "AAAAAAG000048_clsv"
+              },
+              "lineStyle": 1,
+              "points": "590,615;225,350"
+            },
+            {
+              "_type": "UMLAssociationView",
+              "_id": "AAAAAAG00005a_ascv",
+              "_parent": {
+                "$ref": "AAAAAAG00003e_diag"
+              },
+              "model": {
+                "$ref": "AAAAAAG000059_asc"
+              },
+              "font": "Arial;13;0",
+              "headEnd": {
+                "$ref": "AAAAAAG000046_clsv"
+              },
+              "tailEnd": {
+                "$ref": "AAAAAAG000048_clsv"
+              },
+              "lineStyle": 1,
+              "points": "590,615;960,355"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAG00003f_cls",
+          "_parent": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "name": "User",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00005b_attr",
+              "_parent": {
+                "$ref": "AAAAAAG00003f_cls"
+              },
+              "name": "id",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00005c_attr",
+              "_parent": {
+                "$ref": "AAAAAAG00003f_cls"
+              },
+              "name": "email",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00005d_attr",
+              "_parent": {
+                "$ref": "AAAAAAG00003f_cls"
+              },
+              "name": "role",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00005e_attr",
+              "_parent": {
+                "$ref": "AAAAAAG00003f_cls"
+              },
+              "name": "status",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00005f_attr",
+              "_parent": {
+                "$ref": "AAAAAAG00003f_cls"
+              },
+              "name": "createdAt",
+              "type": "DateTime",
+              "visibility": "private"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG000060_op",
+              "_parent": {
+                "$ref": "AAAAAAG00003f_cls"
+              },
+              "name": "authenticate",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000061_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG000060_op"
+                  },
+                  "name": "password",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000062_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG000060_op"
+                  },
+                  "name": "",
+                  "type": "Boolean",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG000063_op",
+              "_parent": {
+                "$ref": "AAAAAAG00003f_cls"
+              },
+              "name": "updateProfile",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000064_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG000063_op"
+                  },
+                  "name": "data",
+                  "type": "Object"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000065_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG000063_op"
+                  },
+                  "name": "",
+                  "type": "void",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG000066_op",
+              "_parent": {
+                "$ref": "AAAAAAG00003f_cls"
+              },
+              "name": "resetPassword",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000067_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG000066_op"
+                  },
+                  "name": "token",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000068_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG000066_op"
+                  },
+                  "name": "",
+                  "type": "Boolean",
+                  "direction": "return"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAG000041_cls",
+          "_parent": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "name": "SeekerProfile",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG000069_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000041_cls"
+              },
+              "name": "userId",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00006a_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000041_cls"
+              },
+              "name": "headline",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00006b_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000041_cls"
+              },
+              "name": "skills",
+              "type": "Array",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00006c_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000041_cls"
+              },
+              "name": "educations",
+              "type": "Array",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00006d_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000041_cls"
+              },
+              "name": "experiences",
+              "type": "Array",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00006e_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000041_cls"
+              },
+              "name": "expectedCTCMin",
+              "type": "Number",
+              "visibility": "private"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG00006f_op",
+              "_parent": {
+                "$ref": "AAAAAAG000041_cls"
+              },
+              "name": "addSkill",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000070_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG00006f_op"
+                  },
+                  "name": "skillId",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000071_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG00006f_op"
+                  },
+                  "name": "level",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000072_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG00006f_op"
+                  },
+                  "name": "",
+                  "type": "void",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG000073_op",
+              "_parent": {
+                "$ref": "AAAAAAG000041_cls"
+              },
+              "name": "parseResume",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000074_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG000073_op"
+                  },
+                  "name": "file",
+                  "type": "Buffer"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000075_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG000073_op"
+                  },
+                  "name": "",
+                  "type": "Object",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG000076_op",
+              "_parent": {
+                "$ref": "AAAAAAG000041_cls"
+              },
+              "name": "calculateProfileCompletion",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000077_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG000076_op"
+                  },
+                  "name": "",
+                  "type": "Number",
+                  "direction": "return"
+                }
+              ]
+            }
+          ],
+          "ownedElements": [
+            {
+              "_type": "UMLGeneralization",
+              "_id": "AAAAAAG00004d_gen",
+              "_parent": {
+                "$ref": "AAAAAAG000041_cls"
+              },
+              "source": {
+                "$ref": "AAAAAAG000041_cls"
+              },
+              "target": {
+                "$ref": "AAAAAAG00003f_cls"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAG000043_cls",
+          "_parent": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "name": "EmployerProfile",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG000078_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000043_cls"
+              },
+              "name": "companyId",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG000079_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000043_cls"
+              },
+              "name": "companyName",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00007a_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000043_cls"
+              },
+              "name": "gstin",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00007b_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000043_cls"
+              },
+              "name": "verificationStatus",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00007c_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000043_cls"
+              },
+              "name": "industry",
+              "type": "String",
+              "visibility": "private"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG00007d_op",
+              "_parent": {
+                "$ref": "AAAAAAG000043_cls"
+              },
+              "name": "verifyGSTIN",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG00007e_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG00007d_op"
+                  },
+                  "name": "",
+                  "type": "Boolean",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG00007f_op",
+              "_parent": {
+                "$ref": "AAAAAAG000043_cls"
+              },
+              "name": "inviteRecruiter",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000080_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG00007f_op"
+                  },
+                  "name": "email",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000081_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG00007f_op"
+                  },
+                  "name": "",
+                  "type": "void",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG000082_op",
+              "_parent": {
+                "$ref": "AAAAAAG000043_cls"
+              },
+              "name": "getJobPostings",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000083_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG000082_op"
+                  },
+                  "name": "",
+                  "type": "Array",
+                  "direction": "return"
+                }
+              ]
+            }
+          ],
+          "ownedElements": [
+            {
+              "_type": "UMLGeneralization",
+              "_id": "AAAAAAG00004f_gen",
+              "_parent": {
+                "$ref": "AAAAAAG000043_cls"
+              },
+              "source": {
+                "$ref": "AAAAAAG000043_cls"
+              },
+              "target": {
+                "$ref": "AAAAAAG00003f_cls"
+              }
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAG000045_cls",
+          "_parent": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "name": "JobPosting",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG000084_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000045_cls"
+              },
+              "name": "id",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG000085_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000045_cls"
+              },
+              "name": "companyId",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG000086_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000045_cls"
+              },
+              "name": "title",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG000087_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000045_cls"
+              },
+              "name": "requiredSkills",
+              "type": "Array",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG000088_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000045_cls"
+              },
+              "name": "experienceMin",
+              "type": "Number",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG000089_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000045_cls"
+              },
+              "name": "ctcRange",
+              "type": "Object",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG00008a_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000045_cls"
+              },
+              "name": "status",
+              "type": "String",
+              "visibility": "private"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG00008b_op",
+              "_parent": {
+                "$ref": "AAAAAAG000045_cls"
+              },
+              "name": "publish",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG00008c_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG00008b_op"
+                  },
+                  "name": "",
+                  "type": "void",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG00008d_op",
+              "_parent": {
+                "$ref": "AAAAAAG000045_cls"
+              },
+              "name": "pause",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG00008e_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG00008d_op"
+                  },
+                  "name": "",
+                  "type": "void",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG00008f_op",
+              "_parent": {
+                "$ref": "AAAAAAG000045_cls"
+              },
+              "name": "archive",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000090_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG00008f_op"
+                  },
+                  "name": "",
+                  "type": "void",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG000091_op",
+              "_parent": {
+                "$ref": "AAAAAAG000045_cls"
+              },
+              "name": "addRequirement",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000092_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG000091_op"
+                  },
+                  "name": "skillId",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000093_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG000091_op"
+                  },
+                  "name": "required",
+                  "type": "Boolean"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG000094_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG000091_op"
+                  },
+                  "name": "",
+                  "type": "void",
+                  "direction": "return"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAG000047_cls",
+          "_parent": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "name": "MatchEngine",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG000095_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000047_cls"
+              },
+              "name": "activeJobs",
+              "type": "Map",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG000096_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000047_cls"
+              },
+              "name": "skillIndex",
+              "type": "Map",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG000097_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000047_cls"
+              },
+              "name": "vectorizer",
+              "type": "Vectorizer",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG000098_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000047_cls"
+              },
+              "name": "matchWeights",
+              "type": "Object",
+              "visibility": "private"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG000099_op",
+              "_parent": {
+                "$ref": "AAAAAAG000047_cls"
+              },
+              "name": "ensureIndex",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG00009a_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG000099_op"
+                  },
+                  "name": "",
+                  "type": "void",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG00009b_op",
+              "_parent": {
+                "$ref": "AAAAAAG000047_cls"
+              },
+              "name": "scorePair",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG00009c_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG00009b_op"
+                  },
+                  "name": "seeker",
+                  "type": "SeekerProfile"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG00009d_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG00009b_op"
+                  },
+                  "name": "job",
+                  "type": "JobPosting"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG00009e_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG00009b_op"
+                  },
+                  "name": "",
+                  "type": "MatchResult",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG00009f_op",
+              "_parent": {
+                "$ref": "AAAAAAG000047_cls"
+              },
+              "name": "topJobsForSeeker",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000a0_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG00009f_op"
+                  },
+                  "name": "seekerId",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000a1_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG00009f_op"
+                  },
+                  "name": "limit",
+                  "type": "Number"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000a2_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG00009f_op"
+                  },
+                  "name": "",
+                  "type": "Array",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG0000a3_op",
+              "_parent": {
+                "$ref": "AAAAAAG000047_cls"
+              },
+              "name": "topSeekersForJob",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000a4_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000a3_op"
+                  },
+                  "name": "jobId",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000a5_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000a3_op"
+                  },
+                  "name": "limit",
+                  "type": "Number"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000a6_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000a3_op"
+                  },
+                  "name": "",
+                  "type": "Array",
+                  "direction": "return"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAG000049_cls",
+          "_parent": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "name": "XAIProcessor",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG0000a7_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000049_cls"
+              },
+              "name": "taxonomyTree",
+              "type": "Object",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG0000a8_attr",
+              "_parent": {
+                "$ref": "AAAAAAG000049_cls"
+              },
+              "name": "weights",
+              "type": "Object",
+              "visibility": "private"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG0000a9_op",
+              "_parent": {
+                "$ref": "AAAAAAG000049_cls"
+              },
+              "name": "isolateSkillOverlap",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000aa_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000a9_op"
+                  },
+                  "name": "seekerSkills",
+                  "type": "Array"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000ab_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000a9_op"
+                  },
+                  "name": "jobSkills",
+                  "type": "Array"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000ac_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000a9_op"
+                  },
+                  "name": "",
+                  "type": "Array",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG0000ad_op",
+              "_parent": {
+                "$ref": "AAAAAAG000049_cls"
+              },
+              "name": "extractSkillGaps",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000ae_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000ad_op"
+                  },
+                  "name": "seekerSkills",
+                  "type": "Array"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000af_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000ad_op"
+                  },
+                  "name": "jobSkills",
+                  "type": "Array"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000b0_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000ad_op"
+                  },
+                  "name": "",
+                  "type": "Array",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG0000b1_op",
+              "_parent": {
+                "$ref": "AAAAAAG000049_cls"
+              },
+              "name": "generateActionableRecommendations",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000b2_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000b1_op"
+                  },
+                  "name": "missing",
+                  "type": "Array"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000b3_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000b1_op"
+                  },
+                  "name": "",
+                  "type": "Array",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG0000b4_op",
+              "_parent": {
+                "$ref": "AAAAAAG000049_cls"
+              },
+              "name": "computeAttributionBreakdown",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000b5_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000b4_op"
+                  },
+                  "name": "parts",
+                  "type": "Object"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000b6_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000b4_op"
+                  },
+                  "name": "",
+                  "type": "Object",
+                  "direction": "return"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAG00004b_cls",
+          "_parent": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "name": "AuditHashGenerator",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG0000b7_attr",
+              "_parent": {
+                "$ref": "AAAAAAG00004b_cls"
+              },
+              "name": "hashAlgorithm",
+              "type": "String",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAG0000b8_attr",
+              "_parent": {
+                "$ref": "AAAAAAG00004b_cls"
+              },
+              "name": "prefix",
+              "type": "String",
+              "visibility": "private"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG0000b9_op",
+              "_parent": {
+                "$ref": "AAAAAAG00004b_cls"
+              },
+              "name": "generateSHA256",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000ba_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000b9_op"
+                  },
+                  "name": "payload",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000bb_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000b9_op"
+                  },
+                  "name": "",
+                  "type": "String",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG0000bc_op",
+              "_parent": {
+                "$ref": "AAAAAAG00004b_cls"
+              },
+              "name": "formatFairnessToken",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000bd_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000bc_op"
+                  },
+                  "name": "seekerId",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000be_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000bc_op"
+                  },
+                  "name": "jobId",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000bf_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000bc_op"
+                  },
+                  "name": "score",
+                  "type": "Number"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000c0_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000bc_op"
+                  },
+                  "name": "",
+                  "type": "String",
+                  "direction": "return"
+                }
+              ]
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAG0000c1_op",
+              "_parent": {
+                "$ref": "AAAAAAG00004b_cls"
+              },
+              "name": "verifyIntegrity",
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000c2_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000c1_op"
+                  },
+                  "name": "seekerId",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000c3_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000c1_op"
+                  },
+                  "name": "jobId",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000c4_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000c1_op"
+                  },
+                  "name": "score",
+                  "type": "Number"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000c5_param",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000c1_op"
+                  },
+                  "name": "hash",
+                  "type": "String"
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "AAAAAAG0000c6_ret",
+                  "_parent": {
+                    "$ref": "AAAAAAG0000c1_op"
+                  },
+                  "name": "",
+                  "type": "Boolean",
+                  "direction": "return"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "UMLAssociation",
+          "_id": "AAAAAAG000051_asc",
+          "_parent": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "name": "publishes",
+          "end1": {
+            "_type": "UMLAssociationEnd",
+            "_id": "AAAAAAG0000c7_end",
+            "_parent": {
+              "$ref": "AAAAAAG000051_asc"
+            },
+            "reference": {
+              "$ref": "AAAAAAG000043_cls"
+            },
+            "aggregation": "composite"
+          },
+          "end2": {
+            "_type": "UMLAssociationEnd",
+            "_id": "AAAAAAG0000c8_end",
+            "_parent": {
+              "$ref": "AAAAAAG000051_asc"
+            },
+            "reference": {
+              "$ref": "AAAAAAG000045_cls"
+            }
+          }
+        },
+        {
+          "_type": "UMLAssociation",
+          "_id": "AAAAAAG000053_asc",
+          "_parent": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "name": "delegates attribution",
+          "end1": {
+            "_type": "UMLAssociationEnd",
+            "_id": "AAAAAAG0000c9_end",
+            "_parent": {
+              "$ref": "AAAAAAG000053_asc"
+            },
+            "reference": {
+              "$ref": "AAAAAAG000047_cls"
+            },
+            "aggregation": "shared"
+          },
+          "end2": {
+            "_type": "UMLAssociationEnd",
+            "_id": "AAAAAAG0000ca_end",
+            "_parent": {
+              "$ref": "AAAAAAG000053_asc"
+            },
+            "reference": {
+              "$ref": "AAAAAAG000049_cls"
+            }
+          }
+        },
+        {
+          "_type": "UMLAssociation",
+          "_id": "AAAAAAG000055_asc",
+          "_parent": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "name": "delegates hashing",
+          "end1": {
+            "_type": "UMLAssociationEnd",
+            "_id": "AAAAAAG0000cb_end",
+            "_parent": {
+              "$ref": "AAAAAAG000055_asc"
+            },
+            "reference": {
+              "$ref": "AAAAAAG000047_cls"
+            },
+            "aggregation": "shared"
+          },
+          "end2": {
+            "_type": "UMLAssociationEnd",
+            "_id": "AAAAAAG0000cc_end",
+            "_parent": {
+              "$ref": "AAAAAAG000055_asc"
+            },
+            "reference": {
+              "$ref": "AAAAAAG00004b_cls"
+            }
+          }
+        },
+        {
+          "_type": "UMLAssociation",
+          "_id": "AAAAAAG000057_asc",
+          "_parent": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "name": "evaluates",
+          "end1": {
+            "_type": "UMLAssociationEnd",
+            "_id": "AAAAAAG0000cd_end",
+            "_parent": {
+              "$ref": "AAAAAAG000057_asc"
+            },
+            "reference": {
+              "$ref": "AAAAAAG000047_cls"
+            },
+            "aggregation": "none"
+          },
+          "end2": {
+            "_type": "UMLAssociationEnd",
+            "_id": "AAAAAAG0000ce_end",
+            "_parent": {
+              "$ref": "AAAAAAG000057_asc"
+            },
+            "reference": {
+              "$ref": "AAAAAAG000041_cls"
+            }
+          }
+        },
+        {
+          "_type": "UMLAssociation",
+          "_id": "AAAAAAG000059_asc",
+          "_parent": {
+            "$ref": "AAAAAAG00003d_model"
+          },
+          "name": "evaluates",
+          "end1": {
+            "_type": "UMLAssociationEnd",
+            "_id": "AAAAAAG0000cf_end",
+            "_parent": {
+              "$ref": "AAAAAAG000059_asc"
+            },
+            "reference": {
+              "$ref": "AAAAAAG000047_cls"
+            },
+            "aggregation": "none"
+          },
+          "end2": {
+            "_type": "UMLAssociationEnd",
+            "_id": "AAAAAAG0000d0_end",
+            "_parent": {
+              "$ref": "AAAAAAG000059_asc"
+            },
+            "reference": {
+              "$ref": "AAAAAAG000045_cls"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

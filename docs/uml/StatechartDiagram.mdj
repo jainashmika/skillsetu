@@ -1,0 +1,528 @@
+{
+  "_type": "Project",
+  "_id": "AAAAAAG000113_proj",
+  "name": "SkillSetu - JobApplication Lifecycle",
+  "ownedElements": [
+    {
+      "_type": "UMLModel",
+      "_id": "AAAAAAG000114_model",
+      "_parent": {
+        "$ref": "AAAAAAG000113_proj"
+      },
+      "name": "StateModel",
+      "ownedElements": [
+        {
+          "_type": "UMLStateMachine",
+          "_id": "AAAAAAG000115_sm",
+          "_parent": {
+            "$ref": "AAAAAAG000114_model"
+          },
+          "name": "JobApplicationStateMachine",
+          "regions": [
+            {
+              "_type": "UMLRegion",
+              "_id": "AAAAAAG000116_reg",
+              "_parent": {
+                "$ref": "AAAAAAG000115_sm"
+              },
+              "name": "Region1",
+              "vertices": [
+                {
+                  "_type": "UMLPseudostate",
+                  "_id": "AAAAAAG000118_st",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "Initial",
+                  "kind": "initial"
+                },
+                {
+                  "_type": "UMLState",
+                  "_id": "AAAAAAG00011a_st",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "Discovered (Matched)"
+                },
+                {
+                  "_type": "UMLState",
+                  "_id": "AAAAAAG00011c_st",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "Applied (Awaiting Review)"
+                },
+                {
+                  "_type": "UMLState",
+                  "_id": "AAAAAAG00011e_st",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "UnderReview"
+                },
+                {
+                  "_type": "UMLState",
+                  "_id": "AAAAAAG000120_st",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "Shortlisted"
+                },
+                {
+                  "_type": "UMLState",
+                  "_id": "AAAAAAG000122_st",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "Rejected"
+                },
+                {
+                  "_type": "UMLFinalState",
+                  "_id": "AAAAAAG000124_st",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "FinalState"
+                }
+              ],
+              "transitions": [
+                {
+                  "_type": "UMLTransition",
+                  "_id": "AAAAAAG000126_tr",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "Match score >= threshold",
+                  "source": {
+                    "$ref": "AAAAAAG000118_st"
+                  },
+                  "target": {
+                    "$ref": "AAAAAAG00011a_st"
+                  }
+                },
+                {
+                  "_type": "UMLTransition",
+                  "_id": "AAAAAAG000128_tr",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "Candidate submits application",
+                  "source": {
+                    "$ref": "AAAAAAG00011a_st"
+                  },
+                  "target": {
+                    "$ref": "AAAAAAG00011c_st"
+                  }
+                },
+                {
+                  "_type": "UMLTransition",
+                  "_id": "AAAAAAG00012a_tr",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "Employer opens candidate application",
+                  "source": {
+                    "$ref": "AAAAAAG00011c_st"
+                  },
+                  "target": {
+                    "$ref": "AAAAAAG00011e_st"
+                  }
+                },
+                {
+                  "_type": "UMLTransition",
+                  "_id": "AAAAAAG00012c_tr",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "Employer clicks Approve / Shortlist",
+                  "source": {
+                    "$ref": "AAAAAAG00011e_st"
+                  },
+                  "target": {
+                    "$ref": "AAAAAAG000120_st"
+                  }
+                },
+                {
+                  "_type": "UMLTransition",
+                  "_id": "AAAAAAG00012e_tr",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "Employer clicks Reject",
+                  "source": {
+                    "$ref": "AAAAAAG00011e_st"
+                  },
+                  "target": {
+                    "$ref": "AAAAAAG000122_st"
+                  }
+                },
+                {
+                  "_type": "UMLTransition",
+                  "_id": "AAAAAAG000130_tr",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "Job offer accepted / Process complete",
+                  "source": {
+                    "$ref": "AAAAAAG000120_st"
+                  },
+                  "target": {
+                    "$ref": "AAAAAAG000124_st"
+                  }
+                },
+                {
+                  "_type": "UMLTransition",
+                  "_id": "AAAAAAG000132_tr",
+                  "_parent": {
+                    "$ref": "AAAAAAG000116_reg"
+                  },
+                  "name": "Application archived / Process closed",
+                  "source": {
+                    "$ref": "AAAAAAG000122_st"
+                  },
+                  "target": {
+                    "$ref": "AAAAAAG000124_st"
+                  }
+                }
+              ]
+            }
+          ],
+          "ownedElements": [
+            {
+              "_type": "UMLStatechartDiagram",
+              "_id": "AAAAAAG000117_diag",
+              "_parent": {
+                "$ref": "AAAAAAG000115_sm"
+              },
+              "name": "JobApplication Lifecycle Statechart",
+              "visible": true,
+              "defaultFor": {
+                "$ref": "AAAAAAG000115_sm"
+              },
+              "ownedViews": [
+                {
+                  "_type": "UMLPseudostateView",
+                  "_id": "AAAAAAG000119_stv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG000118_st"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 440,
+                  "top": 40,
+                  "width": 20,
+                  "height": 20
+                },
+                {
+                  "_type": "UMLStateView",
+                  "_id": "AAAAAAG00011b_stv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG00011a_st"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 330,
+                  "top": 110,
+                  "width": 240,
+                  "height": 55,
+                  "nameLabel": {
+                    "_type": "UMLNameCompartmentView",
+                    "_id": "AAAAAAG000134_nc",
+                    "_parent": {
+                      "$ref": "AAAAAAG00011b_stv"
+                    },
+                    "model": {
+                      "$ref": "AAAAAAG00011a_st"
+                    },
+                    "font": "Arial;13;0",
+                    "left": 340,
+                    "top": 128,
+                    "width": 220,
+                    "height": 20,
+                    "text": "Discovered (Matched)"
+                  }
+                },
+                {
+                  "_type": "UMLStateView",
+                  "_id": "AAAAAAG00011d_stv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG00011c_st"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 320,
+                  "top": 220,
+                  "width": 260,
+                  "height": 55,
+                  "nameLabel": {
+                    "_type": "UMLNameCompartmentView",
+                    "_id": "AAAAAAG000135_nc",
+                    "_parent": {
+                      "$ref": "AAAAAAG00011d_stv"
+                    },
+                    "model": {
+                      "$ref": "AAAAAAG00011c_st"
+                    },
+                    "font": "Arial;13;0",
+                    "left": 330,
+                    "top": 238,
+                    "width": 240,
+                    "height": 20,
+                    "text": "Applied (Awaiting Review)"
+                  }
+                },
+                {
+                  "_type": "UMLStateView",
+                  "_id": "AAAAAAG00011f_stv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG00011e_st"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 350,
+                  "top": 330,
+                  "width": 200,
+                  "height": 55,
+                  "nameLabel": {
+                    "_type": "UMLNameCompartmentView",
+                    "_id": "AAAAAAG000136_nc",
+                    "_parent": {
+                      "$ref": "AAAAAAG00011f_stv"
+                    },
+                    "model": {
+                      "$ref": "AAAAAAG00011e_st"
+                    },
+                    "font": "Arial;13;0",
+                    "left": 360,
+                    "top": 348,
+                    "width": 180,
+                    "height": 20,
+                    "text": "UnderReview"
+                  }
+                },
+                {
+                  "_type": "UMLStateView",
+                  "_id": "AAAAAAG000121_stv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG000120_st"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 160,
+                  "top": 460,
+                  "width": 180,
+                  "height": 55,
+                  "nameLabel": {
+                    "_type": "UMLNameCompartmentView",
+                    "_id": "AAAAAAG000137_nc",
+                    "_parent": {
+                      "$ref": "AAAAAAG000121_stv"
+                    },
+                    "model": {
+                      "$ref": "AAAAAAG000120_st"
+                    },
+                    "font": "Arial;13;0",
+                    "left": 170,
+                    "top": 478,
+                    "width": 160,
+                    "height": 20,
+                    "text": "Shortlisted"
+                  }
+                },
+                {
+                  "_type": "UMLStateView",
+                  "_id": "AAAAAAG000123_stv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG000122_st"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 560,
+                  "top": 460,
+                  "width": 180,
+                  "height": 55,
+                  "nameLabel": {
+                    "_type": "UMLNameCompartmentView",
+                    "_id": "AAAAAAG000138_nc",
+                    "_parent": {
+                      "$ref": "AAAAAAG000123_stv"
+                    },
+                    "model": {
+                      "$ref": "AAAAAAG000122_st"
+                    },
+                    "font": "Arial;13;0",
+                    "left": 570,
+                    "top": 478,
+                    "width": 160,
+                    "height": 20,
+                    "text": "Rejected"
+                  }
+                },
+                {
+                  "_type": "UMLFinalStateView",
+                  "_id": "AAAAAAG000125_stv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG000124_st"
+                  },
+                  "font": "Arial;13;0",
+                  "left": 437,
+                  "top": 590,
+                  "width": 26,
+                  "height": 26
+                },
+                {
+                  "_type": "UMLTransitionView",
+                  "_id": "AAAAAAG000127_trv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG000126_tr"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG00011b_stv"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG000119_stv"
+                  },
+                  "lineStyle": 1,
+                  "points": "450,60;450,110"
+                },
+                {
+                  "_type": "UMLTransitionView",
+                  "_id": "AAAAAAG000129_trv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG000128_tr"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG00011d_stv"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG00011b_stv"
+                  },
+                  "lineStyle": 1,
+                  "points": "450,165;450,220"
+                },
+                {
+                  "_type": "UMLTransitionView",
+                  "_id": "AAAAAAG00012b_trv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG00012a_tr"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG00011f_stv"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG00011d_stv"
+                  },
+                  "lineStyle": 1,
+                  "points": "450,275;450,330"
+                },
+                {
+                  "_type": "UMLTransitionView",
+                  "_id": "AAAAAAG00012d_trv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG00012c_tr"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG000121_stv"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG00011f_stv"
+                  },
+                  "lineStyle": 1,
+                  "points": "450,385;250,460"
+                },
+                {
+                  "_type": "UMLTransitionView",
+                  "_id": "AAAAAAG00012f_trv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG00012e_tr"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG000123_stv"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG00011f_stv"
+                  },
+                  "lineStyle": 1,
+                  "points": "450,385;650,460"
+                },
+                {
+                  "_type": "UMLTransitionView",
+                  "_id": "AAAAAAG000131_trv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG000130_tr"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG000125_stv"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG000121_stv"
+                  },
+                  "lineStyle": 1,
+                  "points": "250,515;450,590"
+                },
+                {
+                  "_type": "UMLTransitionView",
+                  "_id": "AAAAAAG000133_trv",
+                  "_parent": {
+                    "$ref": "AAAAAAG000117_diag"
+                  },
+                  "model": {
+                    "$ref": "AAAAAAG000132_tr"
+                  },
+                  "font": "Arial;13;0",
+                  "headEnd": {
+                    "$ref": "AAAAAAG000125_stv"
+                  },
+                  "tailEnd": {
+                    "$ref": "AAAAAAG000123_stv"
+                  },
+                  "lineStyle": 1,
+                  "points": "650,515;450,590"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
