@@ -13,11 +13,21 @@ const SKILLS = [
   ['Inventory Management', 'Logistics', ['inventory', 'warehouse management', 'wms']], ['Supply Chain', 'Logistics', ['scm', 'logistics']], ['Electrical Wiring', 'Trades', ['wiring', 'electrician']], ['Safety Compliance', 'Trades', ['safety', 'ehs']],
   ['CNC Operation', 'Manufacturing', ['cnc', 'cnc machining']], ['Welding', 'Trades', ['arc welding', 'mig welding']], ['AutoCAD', 'Engineering', ['cad']], ['Nursing', 'Healthcare', ['patient care', 'gnm']],
   ['Hindi', 'Language', []], ['Kannada', 'Language', []], ['Data Entry', 'Office', ['typing']], ['REST APIs', 'Software', ['rest', 'api development']], ['Cloud (AWS)', 'Software', ['aws', 'cloud']], ['Retail Operations', 'Service', ['retail', 'store operations']], ['Driving (LMV)', 'Trades', ['driving', 'driver', 'lmv']],
+  ['TypeScript', 'Software', ['ts']], ['Android Development', 'Software', ['android', 'kotlin']], ['Flutter', 'Software', ['dart']], ['Software Testing', 'Software', ['qa', 'manual testing', 'selenium']], ['Git', 'Software', ['github', 'version control']],
+  ['Power BI', 'Data', ['powerbi', 'tableau', 'dashboards']], ['Statistics', 'Data', []], ['UI/UX Design', 'Design', ['figma', 'ui design', 'ux']], ['Graphic Design', 'Design', ['photoshop', 'canva', 'illustrator']], ['Content Writing', 'Marketing', ['copywriting', 'blogging']],
+  ['Telecalling', 'Sales', ['telesales', 'cold calling']], ['Banking Operations', 'Finance', ['kyc', 'branch operations']], ['Payroll', 'Finance', ['salary processing']], ['Recruitment', 'HR', ['hiring', 'talent acquisition']], ['HR Operations', 'HR', ['onboarding', 'hr admin']],
+  ['Plumbing', 'Trades', ['plumber']], ['Machine Maintenance', 'Manufacturing', ['maintenance', 'preventive maintenance']], ['Quality Control', 'Manufacturing', ['qc', 'quality inspection', 'qa/qc']], ['Forklift Operation', 'Logistics', ['forklift']], ['Site Supervision', 'Construction', ['site engineer', 'civil supervision']],
+  ['Pharmacy', 'Healthcare', ['pharmacist', 'd.pharm', 'b.pharm']], ['Lab Technician', 'Healthcare', ['dmlt', 'lab technician', 'pathology']], ['Teaching', 'Education', ['teacher', 'tutoring', 'b.ed']], ['Cooking', 'Hospitality', ['chef', 'commis', 'kitchen']], ['Front Desk', 'Hospitality', ['receptionist', 'front office']],
+  ['English', 'Language', ['spoken english']], ['Tamil', 'Language', []], ['Marathi', 'Language', []], ['Telugu', 'Language', []],
 ];
-const SECTORS = ['IT & Software', 'Manufacturing', 'Logistics', 'Banking & Finance', 'Healthcare', 'Retail', 'Marketing', 'Construction', 'Education', 'Hospitality'];
+const SECTORS = ['IT & Software', 'Manufacturing', 'Logistics', 'Banking & Finance', 'Healthcare', 'Retail', 'Marketing', 'Construction', 'Education', 'Hospitality', 'Human Resources', 'Design & Media'];
 const COMPANIES = [
   ['Finlytics Pvt Ltd', 'IT & Software', 'Bengaluru', '29', 'AAACF1234K'], ['Shakti Engineering Works', 'Manufacturing', 'Coimbatore', '33', 'AAFCS4321M'], ['Acme Logistics', 'Logistics', 'Pune', '27', 'AABCA7788P'],
   ['Sahyog Small Finance Bank', 'Banking & Finance', 'Mumbai', '27', 'AADCS5566Q'], ['Arogya Hospitals', 'Healthcare', 'Hyderabad', '36', 'AAECA9911R'], ['BrightCart Retail', 'Retail', 'Delhi', '07', 'AAGCB2233S'],
+  ['CodeNest Technologies', 'IT & Software', 'Hyderabad', '36', 'AAHCC1122T'], ['Pixel Forge Studios', 'Design & Media', 'Pune', '27', 'AAICP3344U'], ['Bharat Build Infra', 'Construction', 'Chennai', '33', 'AAJCB5566V'],
+  ['GreenLeaf Hotels', 'Hospitality', 'Jaipur', '08', 'AAKCG7788W'], ['Vidya Learning Centres', 'Education', 'Lucknow', '09', 'AALCV9900X'], ['MedPlus Diagnostics', 'Healthcare', 'Bengaluru', '29', 'AAMCM1212Y'],
+  ['SwiftMove Logistics', 'Logistics', 'Ahmedabad', '24', 'AANCS3434Z'], ['PeopleFirst HR Services', 'Human Resources', 'Gurugram', '06', 'AAOCP5656A'], ['Kaveri Auto Components', 'Manufacturing', 'Mysuru', '29', 'AAPCK7878B'],
+  ['UrbanBasket', 'Retail', 'Kolkata', '19', 'AAQCU9090C'], ['Nimbus Cloud Labs', 'IT & Software', 'Noida', '09', 'AARCN2121D'], ['Jan Seva Finance', 'Banking & Finance', 'Indore', '23', 'AASCJ4343E'],
 ];
 const JOBS = [
   [0, 'Frontend Developer (React)', 'Build accessible, fast React interfaces for a lending platform used across India. Work with designers and backend engineers, write tests and ship weekly.', ['React', 'JavaScript', 'REST APIs'], ['SQL'], 'hybrid', 600000, 1200000, 1, 5],
@@ -47,10 +57,57 @@ const SEEKERS = [
   ['Vikram Singh', 'vikram@example.in', '9876500008', 'Pune', 4, 4, ['Inventory Management', 'Team Leadership', 'Supply Chain'], 'Warehouse lead', 380000, 'Diploma', 2018],
 ];
 
+
+// ---- Generated volume: role templates produce many overlapping jobs and candidates ----
+// [title, sector, required skills, nice-to-have skills, edu level, min exp, ctcMin, ctcMax, contract, work format]
+const ROLES = [
+  ['Full Stack Developer', 'IT & Software', ['JavaScript', 'React', 'Node.js'], ['SQL', 'Git', 'TypeScript'], 5, 1, 500000, 1100000, 'full_time', 'hybrid'],
+  ['Junior Web Developer', 'IT & Software', ['JavaScript', 'React'], ['Git', 'REST APIs'], 5, 0, 300000, 500000, 'full_time', 'onsite'],
+  ['Python Developer', 'IT & Software', ['Python', 'SQL'], ['REST APIs', 'Cloud (AWS)', 'Git'], 5, 1, 450000, 900000, 'full_time', 'remote'],
+  ['Android Developer', 'IT & Software', ['Android Development', 'Java'], ['Flutter', 'Git', 'REST APIs'], 5, 1, 450000, 950000, 'full_time', 'hybrid'],
+  ['QA Tester', 'IT & Software', ['Software Testing'], ['SQL', 'Git', 'JavaScript'], 5, 0, 300000, 550000, 'full_time', 'onsite'],
+  ['Software Engineering Intern', 'IT & Software', ['JavaScript', 'Git'], ['Python', 'React', 'SQL'], 5, 0, 180000, 300000, 'internship', 'hybrid'],
+  ['Data Analyst', 'IT & Software', ['SQL', 'Data Analysis', 'MS Excel'], ['Power BI', 'Python', 'Statistics'], 5, 1, 400000, 800000, 'full_time', 'hybrid'],
+  ['Business Intelligence Analyst', 'Banking & Finance', ['Power BI', 'SQL'], ['Data Analysis', 'MS Excel'], 5, 2, 600000, 1100000, 'full_time', 'onsite'],
+  ['UI/UX Designer', 'Design & Media', ['UI/UX Design'], ['Graphic Design', 'Communication'], 5, 1, 400000, 900000, 'full_time', 'hybrid'],
+  ['Graphic Designer', 'Design & Media', ['Graphic Design'], ['Social Media', 'UI/UX Design'], 4, 0, 250000, 450000, 'full_time', 'onsite'],
+  ['Content Writer', 'Marketing', ['Content Writing', 'English'], ['SEO', 'Social Media'], 5, 0, 250000, 450000, 'full_time', 'remote'],
+  ['Social Media Executive', 'Marketing', ['Social Media', 'Digital Marketing'], ['Content Writing', 'Graphic Design'], 5, 0, 250000, 420000, 'full_time', 'hybrid'],
+  ['Telecaller', 'Retail', ['Telecalling', 'Communication'], ['Hindi', 'Customer Service', 'English'], 2, 0, 150000, 220000, 'full_time', 'onsite'],
+  ['Customer Support Executive', 'IT & Software', ['Customer Service', 'Communication', 'English'], ['Data Entry', 'Hindi'], 2, 0, 200000, 300000, 'full_time', 'onsite'],
+  ['Sales Executive', 'Retail', ['Sales', 'Communication'], ['Customer Service', 'Hindi'], 2, 0, 200000, 350000, 'full_time', 'onsite'],
+  ['Branch Operations Officer', 'Banking & Finance', ['Banking Operations', 'Customer Service'], ['MS Excel', 'Communication'], 5, 0, 280000, 400000, 'full_time', 'onsite'],
+  ['Accountant', 'Banking & Finance', ['Accounting', 'Tally ERP'], ['GST Filing', 'MS Excel', 'Payroll'], 5, 1, 260000, 420000, 'full_time', 'onsite'],
+  ['Payroll Executive', 'Human Resources', ['Payroll', 'MS Excel'], ['Accounting', 'HR Operations'], 5, 1, 280000, 420000, 'full_time', 'onsite'],
+  ['HR Recruiter', 'Human Resources', ['Recruitment', 'Communication'], ['HR Operations', 'MS Excel'], 5, 0, 250000, 450000, 'full_time', 'hybrid'],
+  ['Data Entry Operator', 'Banking & Finance', ['Data Entry', 'MS Excel'], ['English', 'Hindi'], 2, 0, 150000, 220000, 'full_time', 'onsite'],
+  ['Maintenance Technician', 'Manufacturing', ['Machine Maintenance', 'Safety Compliance'], ['Electrical Wiring'], 3, 1, 200000, 320000, 'full_time', 'onsite'],
+  ['Quality Inspector', 'Manufacturing', ['Quality Control', 'Safety Compliance'], ['MS Excel', 'AutoCAD'], 4, 1, 220000, 360000, 'full_time', 'onsite'],
+  ['Production Trainee', 'Manufacturing', ['Safety Compliance'], ['CNC Operation', 'Quality Control'], 3, 0, 160000, 220000, 'apprenticeship', 'onsite'],
+  ['Plumber', 'Construction', ['Plumbing', 'Safety Compliance'], [], 3, 1, 180000, 280000, 'contract', 'onsite'],
+  ['Site Supervisor', 'Construction', ['Site Supervision', 'Team Leadership'], ['AutoCAD', 'Safety Compliance'], 4, 2, 300000, 500000, 'full_time', 'onsite'],
+  ['Forklift Operator', 'Logistics', ['Forklift Operation', 'Safety Compliance'], ['Inventory Management'], 1, 1, 180000, 250000, 'full_time', 'onsite'],
+  ['Inventory Executive', 'Logistics', ['Inventory Management', 'MS Excel'], ['Supply Chain', 'Data Entry'], 4, 0, 220000, 340000, 'full_time', 'onsite'],
+  ['Pharmacist', 'Healthcare', ['Pharmacy', 'Customer Service'], ['Data Entry'], 4, 0, 220000, 360000, 'full_time', 'onsite'],
+  ['Lab Technician', 'Healthcare', ['Lab Technician', 'Safety Compliance'], ['Data Entry'], 4, 0, 200000, 320000, 'full_time', 'onsite'],
+  ['Primary School Teacher', 'Education', ['Teaching', 'Communication', 'English'], ['Hindi'], 5, 0, 220000, 360000, 'full_time', 'onsite'],
+  ['Online Tutor', 'Education', ['Teaching', 'English'], ['Communication', 'MS Excel'], 5, 0, 180000, 360000, 'part_time', 'remote'],
+  ['Commis Chef', 'Hospitality', ['Cooking', 'Safety Compliance'], ['Team Leadership'], 2, 0, 180000, 260000, 'full_time', 'onsite'],
+  ['Hotel Front Desk Associate', 'Hospitality', ['Front Desk', 'Customer Service', 'English'], ['Hindi', 'Communication'], 2, 0, 180000, 260000, 'full_time', 'onsite'],
+  ['Store Manager', 'Retail', ['Retail Operations', 'Team Leadership', 'Sales'], ['Inventory Management', 'MS Excel'], 5, 3, 350000, 550000, 'full_time', 'onsite'],
+];
+const FIRST = ['Aarav', 'Ananya', 'Vivaan', 'Diya', 'Aditya', 'Ishita', 'Kabir', 'Saanvi', 'Arjun', 'Myra', 'Rohit', 'Kavya', 'Sahil', 'Nisha', 'Manoj', 'Pooja', 'Yash', 'Sneha', 'Tarun', 'Divya', 'Harsh', 'Swati', 'Nikhil', 'Bhavna', 'Gaurav', 'Riya', 'Ajay', 'Lata', 'Pranav', 'Shreya', 'Irfan', 'Fatima', 'Joseph', 'Mary', 'Gurpreet', 'Harleen', 'Siddharth', 'Tanvi', 'Ravi', 'Asha'];
+const LAST = ['Sharma', 'Verma', 'Iyer', 'Reddy', 'Patel', 'Nair', 'Das', 'Khan', 'Singh', 'Gupta', 'Joshi', 'Menon', 'Rao', 'Kulkarni', 'Mehta', 'Pillai', 'Chatterjee', 'Yadav', 'Thomas', 'Gill'];
+const QUAL = { 1: '10th', 2: '12th', 3: 'ITI', 4: 'Diploma', 5: 'B.Com', 6: 'MBA' };
+const QUAL_BY_SECTOR = { 'IT & Software': 'B.Tech', 'Design & Media': 'B.Des', Healthcare: 'B.Sc', Education: 'B.A.', 'Banking & Finance': 'B.Com', 'Human Resources': 'BBA', Marketing: 'BBA', Construction: 'Diploma', Manufacturing: 'Diploma' };
+function rng(seed) { let x = seed; return () => { x = (x * 1103515245 + 12345) % 2147483648; return x / 2147483648; }; }
+
+const HASHES = new Map(); // demo accounts share passwords, so hash each one once (keeps cold starts fast)
 function user(role, name, email, phone, password, extra = {}) {
   const p = `+91${phone}`;
+  if (!HASHES.has(password)) HASHES.set(password, bcrypt.hashSync(password, 8));
   const r = run(`INSERT INTO users(role,name,email,phone_hash,phone_enc,phone_masked,password_hash,status,phone_verified,mfa_enabled) VALUES(?,?,?,?,?,?,?,?,1,?)`,
-    role, name, email, hmac(p), encrypt(p), maskPhone(p), bcrypt.hashSync(password, 8), extra.status || 'active', extra.mfa ? 1 : 0);
+    role, name, email, hmac(p), encrypt(p), maskPhone(p), HASHES.get(password), extra.status || 'active', extra.mfa ? 1 : 0);
   run('INSERT INTO notification_prefs(user_id) VALUES(?)', r.lastInsertRowid);
   return Number(r.lastInsertRowid);
 }
@@ -72,7 +129,7 @@ function seed() {
       const c = run(`INSERT INTO companies(name,slug,gstin,industry,size,city,state,about,website,verification_status,verified_at) VALUES(?,?,?,?,?,?,?,?,?,'verified',datetime('now'))`,
         name, name.toLowerCase().replace(/[^a-z0-9]+/g, '-'), gov.makeGstin(st, pan), ind, ['51-200', '201-1000', '1000+'][i % 3], city, require('../services/taxonomy').stateOf(city),
         `${name} is a ${ind} employer hiring across India.`, `https://${name.split(' ')[0].toLowerCase()}.example.in`);
-      const uid = user('employer', ['Anita Rao', 'Karthik Subramanian', 'Neha Joshi', 'Rohan Mehta', 'Farah Siddiqui', 'Amit Bansal'][i], i === 0 ? 'hr@finlytics.in' : `hr${i}@${name.split(' ')[0].toLowerCase()}.in`, `90000001${String(i).padStart(2, '0')}`, 'Employer@123');
+      const uid = user('employer', ['Anita Rao', 'Karthik Subramanian', 'Neha Joshi', 'Rohan Mehta', 'Farah Siddiqui', 'Amit Bansal', 'Sanjay Reddy', 'Pooja Kulkarni', 'Arvind Iyer', 'Meera Rathore', 'Shalini Mishra', 'Deepak Nair', 'Harish Patel', 'Kavya Sharma', 'Suresh Gowda', 'Ritu Banerjee', 'Varun Khanna', 'Ankita Jain'][i], i === 0 ? 'hr@finlytics.in' : `hr${i}@${name.split(' ')[0].toLowerCase()}.in`, `90000001${String(i).padStart(2, '0')}`, 'Employer@123');
       run("INSERT INTO employer_users(user_id,company_id,company_role) VALUES(?,?,'owner')", uid, c.lastInsertRowid);
       return { id: Number(c.lastInsertRowid), uid, city };
     });
@@ -111,6 +168,77 @@ function seed() {
     });
     for (let d = 0; d < 14; d++) for (let k = 0; k < 6 + (d % 4); k++) run("INSERT INTO activity_events(guest_id,event,meta,created_at) VALUES(?, 'search', ?, datetime('now', ?))", `g${k}`, JSON.stringify({ q: ['react', 'electrician', 'accounts', 'nurse', 'delivery', 'sales'][k % 6] }), `-${d} days`);
     run("INSERT INTO saved_jobs(user_id,job_id) VALUES(?,?)", seekerIds[0], jobIds[1]);
+    // Generated jobs: each role is posted by 2-3 employers in matching or nearby cities.
+    const R = rng(42);
+    const pick = (a) => a[Math.floor(R() * a.length)];
+    const tax = require('../services/taxonomy');
+    const bySector = (sec) => companyIds.filter((_, i) => COMPANIES[i][1] === sec);
+    const genJobs = [];
+    ROLES.forEach(([title, sector, req, nice, edu, emin, cmin, cmax, ct, wf], ri) => {
+      const pool = bySector(sector).length ? bySector(sector) : companyIds;
+      const posts = 2 + (ri % 2);
+      for (let k = 0; k < posts; k++) {
+        const c = pool[(ri + k) % pool.length];
+        const city = k === 0 ? c.city : pick(['Bengaluru', 'Pune', 'Hyderabad', 'Chennai', 'Delhi', 'Mumbai', 'Noida', 'Ahmedabad', c.city]);
+        const daysAgo = Math.floor(R() * 45);
+        const bump = 1 + k * 0.08;
+        const desc = `${COMPANIES[companyIds.indexOf(c)][0]} is hiring a ${title} in ${city}. You will work with a friendly team, get on-the-job training and grow with us. Required: ${req.join(', ')}.${nice.length ? ` Good to have: ${nice.join(', ')}.` : ''} ${emin ? `${emin}+ years of experience preferred.` : 'Freshers are welcome to apply.'}`;
+        const j = run(`INSERT INTO jobs(company_id,posted_by,title,description,sector,contract_type,work_format,city,state,ctc_min,ctc_max,experience_min,education_level,openings,deadline,status,published_at,created_at)
+                       VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'active',datetime('now', ?),datetime('now', ?))`,
+          c.id, c.uid, title, desc, sector, ct, k === 2 && wf === 'onsite' ? 'hybrid' : wf, city, tax.stateOf(city), Math.round(cmin * bump), Math.round(cmax * bump), emin, edu, 1 + Math.floor(R() * 8), deadline, `-${daysAgo} days`, `-${daysAgo} days`);
+        const jid = Number(j.lastInsertRowid);
+        req.forEach((x) => run('INSERT OR IGNORE INTO job_skills(job_id,skill_id,required) VALUES(?,?,1)', jid, sid(x)));
+        nice.forEach((x) => run('INSERT OR IGNORE INTO job_skills(job_id,skill_id,required) VALUES(?,?,0)', jid, sid(x)));
+        run("INSERT INTO job_status_history(job_id,from_status,to_status,actor_id,reason) VALUES(?,NULL,'active',?,'Published')", jid, c.uid);
+        genJobs.push({ id: jid, role: ri });
+      }
+    });
+
+    // Generated candidates: each is built around a role so they genuinely fit several jobs.
+    const genSeekers = [];
+    for (let n = 0; n < 72; n++) {
+      const ri = n % ROLES.length; const [title, sector, req, nice, edu, emin, cmin] = ROLES[ri];
+      const name = `${FIRST[n % FIRST.length]} ${LAST[(n * 7) % LAST.length]}`;
+      const email = `${name.toLowerCase().replace(/\s+/g, '.')}${n}@example.in`;
+      const phone = `9${String(700000000 + n * 1337).padStart(9, '0')}`;
+      const uid = user('seeker', name, email, phone, 'Seeker@123');
+      const jobsForRole = genJobs.filter((g) => g.role === ri);
+      const homeCity = one('SELECT city FROM jobs WHERE id=?', jobsForRole[n % jobsForRole.length].id).city;
+      const exp = Math.max(0, emin + Math.floor(R() * 3) - (R() < 0.3 ? 1 : 0));
+      const skills = [...new Set([...req.filter(() => R() > 0.12), ...nice.filter(() => R() > 0.45), ...(R() > 0.5 ? ['Communication'] : []), ...(R() > 0.4 ? ['English'] : [])])];
+      if (!skills.length) skills.push(req[0]);
+      const prefs = R() < 0.35 ? [homeCity, 'Anywhere'] : [homeCity];
+      const vis = R() < 0.25 ? 'public' : 'employers';
+      const eduLevel = Math.max(1, edu + (R() < 0.2 ? 1 : 0) - (R() < 0.12 ? 1 : 0));
+      run(`INSERT INTO seeker_profiles(user_id,slug,headline,about,city,state,education_level,experience_years,expected_ctc_min,preferred_locations,languages,visibility,profile_level,ekyc_verified,digilocker_verified)
+           VALUES(?,?,?,?,?,?,?,?,?,?,?,?,2,?,?)`, uid, `${name.toLowerCase().replace(/\s+/g, '-')}-${uid}`, exp ? `${title} with ${exp} yrs experience` : `Aspiring ${title}`,
+        `${exp ? `${exp} years` : 'Fresher'} looking for ${title.toLowerCase()} roles in ${homeCity}.`, homeCity, tax.stateOf(homeCity), eduLevel, exp, Math.round(cmin * (0.85 + R() * 0.25)),
+        JSON.stringify(prefs), JSON.stringify(['English', 'Hindi'].slice(0, 1 + (n % 2))), vis, R() < 0.4 ? 1 : 0, R() < 0.5 ? 1 : 0);
+      skills.forEach((x) => run("INSERT OR IGNORE INTO seeker_skills(user_id,skill_id,level) VALUES(?,?,?)", uid, sid(x), pick(['beginner', 'intermediate', 'intermediate', 'expert'])));
+      run('INSERT INTO educations(user_id,qualification,level,institution,year,verified) VALUES(?,?,?,?,?,?)', uid, eduLevel >= 5 ? (QUAL_BY_SECTOR[sector] || QUAL[5]) : QUAL[eduLevel] || '12th', eduLevel, `${homeCity} ${eduLevel >= 5 ? 'College' : 'Institute'}`, 2025 - exp - (eduLevel >= 5 ? 0 : 1), R() < 0.5 ? 1 : 0);
+      if (exp) run('INSERT INTO experiences(user_id,title,company,start_date,current) VALUES(?,?,?,?,1)', uid, title, `${pick(LAST)} Enterprises`, `${2026 - exp}-06-01`);
+      genSeekers.push({ uid, role: ri });
+    }
+
+    // Applications and behaviour so dashboards, funnels and collaborative filtering have signal.
+    const stages = ['applied', 'applied', 'shortlisted', 'interview', 'offered', 'hired', 'rejected'];
+    genSeekers.forEach((s, i) => {
+      const mine = genJobs.filter((g) => g.role === s.role);
+      const n = 1 + (i % 3);
+      for (let k = 0; k < Math.min(n, mine.length); k++) {
+        const st = stages[(i + k) % stages.length];
+        const a = run(`INSERT OR IGNORE INTO applications(job_id,seeker_id,status,match_score,created_at) VALUES(?,?,?,?,datetime('now', ?))`, mine[k].id, s.uid, st, 0, `-${Math.floor(R() * 60)} days`);
+        if (a.changes) {
+          run("INSERT INTO application_events(application_id,status,note) VALUES(?, 'applied', 'Application submitted')", a.lastInsertRowid);
+          if (st !== 'applied') run('INSERT INTO application_events(application_id,status,note) VALUES(?,?,NULL)', a.lastInsertRowid, st);
+        }
+      }
+      for (const g of mine) run("INSERT INTO activity_events(user_id,role,event,job_id,created_at) VALUES(?, 'seeker', 'view_job', ?, datetime('now', ?))", s.uid, g.id, `-${Math.floor(R() * 20)} days`);
+      const other = genJobs[Math.floor(R() * genJobs.length)];
+      run("INSERT INTO activity_events(user_id,role,event,job_id) VALUES(?, 'seeker', 'view_job', ?)", s.uid, other.id);
+      if (R() < 0.5) run('INSERT OR IGNORE INTO saved_jobs(user_id,job_id) VALUES(?,?)', s.uid, mine[mine.length - 1].id);
+    });
+
 
     // portals
     const pu = user('portal', 'Naukri Integration Team', 'api@naukri-demo.in', '9000000201', 'Portal@123');
@@ -132,6 +260,19 @@ function seed() {
       .forEach(([q, a, c, ctx]) => run('INSERT INTO faqs(question,answer,category,context) VALUES(?,?,?,?)', q, a, c, ctx || null));
   });
   tx();
+  // Score every seeded application with the real matching engine so analytics reflect the AI.
+  const taxonomy = require('../services/taxonomy'); taxonomy.invalidate();
+  const engine = require('../services/matching/engine'); engine.invalidate();
+  const jobsById = new Map(engine.loadJobs("j.status='active'").map((j) => [j.id, j]));
+  const upd = db.prepare('UPDATE applications SET match_score=? WHERE id=?');
+  const seekers = new Map();
+  db.transaction(() => {
+    for (const a of db.prepare('SELECT id, job_id, seeker_id FROM applications').all()) {
+      const j = jobsById.get(a.job_id); if (!j) continue;
+      if (!seekers.has(a.seeker_id)) seekers.set(a.seeker_id, engine.loadSeeker(a.seeker_id));
+      upd.run(engine.scorePair(seekers.get(a.seeker_id), j).score, a.id);
+    }
+  })();
   require('../services/audit').append({ action: 'system.seed', entity: 'system' });
   console.log('Seeded demo data. Logins: admin@skillsetu.in/Admin@123, hr@finlytics.in/Employer@123, priya@example.in/Seeker@123, api@naukri-demo.in/Portal@123');
 }
