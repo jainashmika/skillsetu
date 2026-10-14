@@ -28,6 +28,10 @@ const COMPANIES = [
   ['GreenLeaf Hotels', 'Hospitality', 'Jaipur', '08', 'AAKCG7788W'], ['Vidya Learning Centres', 'Education', 'Lucknow', '09', 'AALCV9900X'], ['MedPlus Diagnostics', 'Healthcare', 'Bengaluru', '29', 'AAMCM1212Y'],
   ['SwiftMove Logistics', 'Logistics', 'Ahmedabad', '24', 'AANCS3434Z'], ['PeopleFirst HR Services', 'Human Resources', 'Gurugram', '06', 'AAOCP5656A'], ['Kaveri Auto Components', 'Manufacturing', 'Mysuru', '29', 'AAPCK7878B'],
   ['UrbanBasket', 'Retail', 'Kolkata', '19', 'AAQCU9090C'], ['Nimbus Cloud Labs', 'IT & Software', 'Noida', '09', 'AARCN2121D'], ['Jan Seva Finance', 'Banking & Finance', 'Indore', '23', 'AASCJ4343E'],
+  ['Konark Analytics', 'IT & Software', 'Bhubaneswar', '21', 'AATCK6565F'], ['Brahmaputra Foods', 'Hospitality', 'Guwahati', '18', 'AAUCB8787G'], ['Malabar Care Hospitals', 'Healthcare', 'Kochi', '32', 'AAVCM1010H'],
+  ['Sabarmati Textiles', 'Manufacturing', 'Surat', '24', 'AAWCS3232J'], ['Deccan Retail Mart', 'Retail', 'Hyderabad', '36', 'AAXCD5454K'], ['Himalaya Staffing', 'Human Resources', 'Chandigarh', '04', 'AAYCH7676L'],
+  ['Ganga Infra Projects', 'Construction', 'Patna', '10', 'AAZCG9898M'], ['Coastal Freight Lines', 'Logistics', 'Visakhapatnam', '37', 'AABCC1313N'], ['Pragati Credit Society', 'Banking & Finance', 'Nagpur', '27', 'AACCP2424P'],
+  ['BlueOrbit Media', 'Design & Media', 'Mumbai', '27', 'AADCB3535Q'], ['Shiksha Plus Academy', 'Education', 'Bhopal', '23', 'AAECS4646R'], ['Tricolour Marketing', 'Marketing', 'Delhi', '07', 'AAFCT5757S'],
 ];
 const JOBS = [
   [0, 'Frontend Developer (React)', 'Build accessible, fast React interfaces for a lending platform used across India. Work with designers and backend engineers, write tests and ship weekly.', ['React', 'JavaScript', 'REST APIs'], ['SQL'], 'hybrid', 600000, 1200000, 1, 5],
@@ -95,7 +99,21 @@ const ROLES = [
   ['Commis Chef', 'Hospitality', ['Cooking', 'Safety Compliance'], ['Team Leadership'], 2, 0, 180000, 260000, 'full_time', 'onsite'],
   ['Hotel Front Desk Associate', 'Hospitality', ['Front Desk', 'Customer Service', 'English'], ['Hindi', 'Communication'], 2, 0, 180000, 260000, 'full_time', 'onsite'],
   ['Store Manager', 'Retail', ['Retail Operations', 'Team Leadership', 'Sales'], ['Inventory Management', 'MS Excel'], 5, 3, 350000, 550000, 'full_time', 'onsite'],
+  ['Senior Software Engineer', 'IT & Software', ['JavaScript', 'Node.js', 'React', 'Cloud (AWS)'], ['TypeScript', 'SQL', 'Git'], 5, 4, 1500000, 2800000, 'full_time', 'hybrid'],
+  ['DevOps Engineer', 'IT & Software', ['Cloud (AWS)', 'Git', 'Python'], ['REST APIs', 'SQL'], 5, 2, 900000, 1800000, 'full_time', 'remote'],
+  ['Product Analyst', 'IT & Software', ['SQL', 'Data Analysis', 'Statistics'], ['Power BI', 'Python'], 5, 1, 700000, 1400000, 'full_time', 'hybrid'],
+  ['Marketing Manager', 'Marketing', ['Digital Marketing', 'SEO', 'Team Leadership'], ['Social Media', 'Content Writing'], 6, 4, 1000000, 1800000, 'full_time', 'hybrid'],
+  ['Relationship Manager', 'Banking & Finance', ['Banking Operations', 'Sales', 'Communication'], ['MS Excel', 'Hindi'], 5, 2, 450000, 750000, 'full_time', 'onsite'],
+  ['Delivery Executive', 'Logistics', ['Driving (LMV)', 'Customer Service'], ['Hindi'], 1, 0, 180000, 260000, 'full_time', 'onsite'],
+  ['Staff Nurse', 'Healthcare', ['Nursing', 'Communication'], ['English', 'Hindi'], 4, 0, 250000, 400000, 'full_time', 'onsite'],
+  ['Electrician', 'Construction', ['Electrical Wiring', 'Safety Compliance'], ['Machine Maintenance'], 3, 0, 180000, 280000, 'full_time', 'onsite'],
+  ['Warehouse Associate', 'Logistics', ['Inventory Management'], ['Forklift Operation', 'Data Entry'], 1, 0, 160000, 230000, 'full_time', 'onsite'],
+  ['Field Sales Officer', 'Banking & Finance', ['Sales', 'Driving (LMV)', 'Communication'], ['Hindi', 'Customer Service'], 2, 0, 220000, 340000, 'full_time', 'onsite'],
 ];
+// Roles posted in every city, so each city has a broad base of jobs.
+const CORE_ROLES = ['Customer Support Executive', 'Sales Executive', 'Data Entry Operator', 'Delivery Executive', 'Accountant', 'Telecaller', 'Staff Nurse', 'Full Stack Developer', 'Electrician'];
+const HIGH_PAY_ROLES = ['Senior Software Engineer', 'DevOps Engineer', 'Marketing Manager'];
+const PORTALS_FOR_JOBS = ['naukri-demo', 'ncs'];
 const FIRST = ['Aarav', 'Ananya', 'Vivaan', 'Diya', 'Aditya', 'Ishita', 'Kabir', 'Saanvi', 'Arjun', 'Myra', 'Rohit', 'Kavya', 'Sahil', 'Nisha', 'Manoj', 'Pooja', 'Yash', 'Sneha', 'Tarun', 'Divya', 'Harsh', 'Swati', 'Nikhil', 'Bhavna', 'Gaurav', 'Riya', 'Ajay', 'Lata', 'Pranav', 'Shreya', 'Irfan', 'Fatima', 'Joseph', 'Mary', 'Gurpreet', 'Harleen', 'Siddharth', 'Tanvi', 'Ravi', 'Asha'];
 const LAST = ['Sharma', 'Verma', 'Iyer', 'Reddy', 'Patel', 'Nair', 'Das', 'Khan', 'Singh', 'Gupta', 'Joshi', 'Menon', 'Rao', 'Kulkarni', 'Mehta', 'Pillai', 'Chatterjee', 'Yadav', 'Thomas', 'Gill'];
 const QUAL = { 1: '10th', 2: '12th', 3: 'ITI', 4: 'Diploma', 5: 'B.Com', 6: 'MBA' };
@@ -129,7 +147,7 @@ function seed() {
       const c = run(`INSERT INTO companies(name,slug,gstin,industry,size,city,state,about,website,verification_status,verified_at) VALUES(?,?,?,?,?,?,?,?,?,'verified',datetime('now'))`,
         name, name.toLowerCase().replace(/[^a-z0-9]+/g, '-'), gov.makeGstin(st, pan), ind, ['51-200', '201-1000', '1000+'][i % 3], city, require('../services/taxonomy').stateOf(city),
         `${name} is a ${ind} employer hiring across India.`, `https://${name.split(' ')[0].toLowerCase()}.example.in`);
-      const uid = user('employer', ['Anita Rao', 'Karthik Subramanian', 'Neha Joshi', 'Rohan Mehta', 'Farah Siddiqui', 'Amit Bansal', 'Sanjay Reddy', 'Pooja Kulkarni', 'Arvind Iyer', 'Meera Rathore', 'Shalini Mishra', 'Deepak Nair', 'Harish Patel', 'Kavya Sharma', 'Suresh Gowda', 'Ritu Banerjee', 'Varun Khanna', 'Ankita Jain'][i], i === 0 ? 'hr@finlytics.in' : `hr${i}@${name.split(' ')[0].toLowerCase()}.in`, `90000001${String(i).padStart(2, '0')}`, 'Employer@123');
+      const uid = user('employer', ['Anita Rao', 'Karthik Subramanian', 'Neha Joshi', 'Rohan Mehta', 'Farah Siddiqui', 'Amit Bansal', 'Sanjay Reddy', 'Pooja Kulkarni', 'Arvind Iyer', 'Meera Rathore', 'Shalini Mishra', 'Deepak Nair', 'Harish Patel', 'Kavya Sharma', 'Suresh Gowda', 'Ritu Banerjee', 'Varun Khanna', 'Ankita Jain', 'Bikash Mohanty', 'Rupali Saikia', 'Thomas Mathew', 'Jignesh Shah', 'Lakshmi Prasad', 'Gurmeet Kaur', 'Rakesh Sinha', 'Sravani Rao', 'Prakash Deshmukh', 'Nikita Desai', 'Alok Tiwari', 'Sunita Arora'][i], i === 0 ? 'hr@finlytics.in' : `hr${i}@${name.split(' ')[0].toLowerCase()}.in`, `90000001${String(i).padStart(2, '0')}`.slice(0, 10), 'Employer@123');
       run("INSERT INTO employer_users(user_id,company_id,company_role) VALUES(?,?,'owner')", uid, c.lastInsertRowid);
       return { id: Number(c.lastInsertRowid), uid, city };
     });
@@ -168,78 +186,6 @@ function seed() {
     });
     for (let d = 0; d < 14; d++) for (let k = 0; k < 6 + (d % 4); k++) run("INSERT INTO activity_events(guest_id,event,meta,created_at) VALUES(?, 'search', ?, datetime('now', ?))", `g${k}`, JSON.stringify({ q: ['react', 'electrician', 'accounts', 'nurse', 'delivery', 'sales'][k % 6] }), `-${d} days`);
     run("INSERT INTO saved_jobs(user_id,job_id) VALUES(?,?)", seekerIds[0], jobIds[1]);
-    // Generated jobs: each role is posted by 2-3 employers in matching or nearby cities.
-    const R = rng(42);
-    const pick = (a) => a[Math.floor(R() * a.length)];
-    const tax = require('../services/taxonomy');
-    const bySector = (sec) => companyIds.filter((_, i) => COMPANIES[i][1] === sec);
-    const genJobs = [];
-    ROLES.forEach(([title, sector, req, nice, edu, emin, cmin, cmax, ct, wf], ri) => {
-      const pool = bySector(sector).length ? bySector(sector) : companyIds;
-      const posts = 2 + (ri % 2);
-      for (let k = 0; k < posts; k++) {
-        const c = pool[(ri + k) % pool.length];
-        const city = k === 0 ? c.city : pick(['Bengaluru', 'Pune', 'Hyderabad', 'Chennai', 'Delhi', 'Mumbai', 'Noida', 'Ahmedabad', c.city]);
-        const daysAgo = Math.floor(R() * 45);
-        const bump = 1 + k * 0.08;
-        const desc = `${COMPANIES[companyIds.indexOf(c)][0]} is hiring a ${title} in ${city}. You will work with a friendly team, get on-the-job training and grow with us. Required: ${req.join(', ')}.${nice.length ? ` Good to have: ${nice.join(', ')}.` : ''} ${emin ? `${emin}+ years of experience preferred.` : 'Freshers are welcome to apply.'}`;
-        const j = run(`INSERT INTO jobs(company_id,posted_by,title,description,sector,contract_type,work_format,city,state,ctc_min,ctc_max,experience_min,education_level,openings,deadline,status,published_at,created_at)
-                       VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'active',datetime('now', ?),datetime('now', ?))`,
-          c.id, c.uid, title, desc, sector, ct, k === 2 && wf === 'onsite' ? 'hybrid' : wf, city, tax.stateOf(city), Math.round(cmin * bump), Math.round(cmax * bump), emin, edu, 1 + Math.floor(R() * 8), deadline, `-${daysAgo} days`, `-${daysAgo} days`);
-        const jid = Number(j.lastInsertRowid);
-        req.forEach((x) => run('INSERT OR IGNORE INTO job_skills(job_id,skill_id,required) VALUES(?,?,1)', jid, sid(x)));
-        nice.forEach((x) => run('INSERT OR IGNORE INTO job_skills(job_id,skill_id,required) VALUES(?,?,0)', jid, sid(x)));
-        run("INSERT INTO job_status_history(job_id,from_status,to_status,actor_id,reason) VALUES(?,NULL,'active',?,'Published')", jid, c.uid);
-        genJobs.push({ id: jid, role: ri });
-      }
-    });
-
-    // Generated candidates: each is built around a role so they genuinely fit several jobs.
-    const genSeekers = [];
-    for (let n = 0; n < 72; n++) {
-      const ri = n % ROLES.length; const [title, sector, req, nice, edu, emin, cmin] = ROLES[ri];
-      const name = `${FIRST[n % FIRST.length]} ${LAST[(n * 7) % LAST.length]}`;
-      const email = `${name.toLowerCase().replace(/\s+/g, '.')}${n}@example.in`;
-      const phone = `9${String(700000000 + n * 1337).padStart(9, '0')}`;
-      const uid = user('seeker', name, email, phone, 'Seeker@123');
-      const jobsForRole = genJobs.filter((g) => g.role === ri);
-      const homeCity = one('SELECT city FROM jobs WHERE id=?', jobsForRole[n % jobsForRole.length].id).city;
-      const exp = Math.max(0, emin + Math.floor(R() * 3) - (R() < 0.3 ? 1 : 0));
-      const skills = [...new Set([...req.filter(() => R() > 0.12), ...nice.filter(() => R() > 0.45), ...(R() > 0.5 ? ['Communication'] : []), ...(R() > 0.4 ? ['English'] : [])])];
-      if (!skills.length) skills.push(req[0]);
-      const prefs = R() < 0.35 ? [homeCity, 'Anywhere'] : [homeCity];
-      const vis = R() < 0.25 ? 'public' : 'employers';
-      const eduLevel = Math.max(1, edu + (R() < 0.2 ? 1 : 0) - (R() < 0.12 ? 1 : 0));
-      run(`INSERT INTO seeker_profiles(user_id,slug,headline,about,city,state,education_level,experience_years,expected_ctc_min,preferred_locations,languages,visibility,profile_level,ekyc_verified,digilocker_verified)
-           VALUES(?,?,?,?,?,?,?,?,?,?,?,?,2,?,?)`, uid, `${name.toLowerCase().replace(/\s+/g, '-')}-${uid}`, exp ? `${title} with ${exp} yrs experience` : `Aspiring ${title}`,
-        `${exp ? `${exp} years` : 'Fresher'} looking for ${title.toLowerCase()} roles in ${homeCity}.`, homeCity, tax.stateOf(homeCity), eduLevel, exp, Math.round(cmin * (0.85 + R() * 0.25)),
-        JSON.stringify(prefs), JSON.stringify(['English', 'Hindi'].slice(0, 1 + (n % 2))), vis, R() < 0.4 ? 1 : 0, R() < 0.5 ? 1 : 0);
-      skills.forEach((x) => run("INSERT OR IGNORE INTO seeker_skills(user_id,skill_id,level) VALUES(?,?,?)", uid, sid(x), pick(['beginner', 'intermediate', 'intermediate', 'expert'])));
-      run('INSERT INTO educations(user_id,qualification,level,institution,year,verified) VALUES(?,?,?,?,?,?)', uid, eduLevel >= 5 ? (QUAL_BY_SECTOR[sector] || QUAL[5]) : QUAL[eduLevel] || '12th', eduLevel, `${homeCity} ${eduLevel >= 5 ? 'College' : 'Institute'}`, 2025 - exp - (eduLevel >= 5 ? 0 : 1), R() < 0.5 ? 1 : 0);
-      if (exp) run('INSERT INTO experiences(user_id,title,company,start_date,current) VALUES(?,?,?,?,1)', uid, title, `${pick(LAST)} Enterprises`, `${2026 - exp}-06-01`);
-      genSeekers.push({ uid, role: ri });
-    }
-
-    // Applications and behaviour so dashboards, funnels and collaborative filtering have signal.
-    const stages = ['applied', 'applied', 'shortlisted', 'interview', 'offered', 'hired', 'rejected'];
-    genSeekers.forEach((s, i) => {
-      const mine = genJobs.filter((g) => g.role === s.role);
-      const n = 1 + (i % 3);
-      for (let k = 0; k < Math.min(n, mine.length); k++) {
-        const st = stages[(i + k) % stages.length];
-        const a = run(`INSERT OR IGNORE INTO applications(job_id,seeker_id,status,match_score,created_at) VALUES(?,?,?,?,datetime('now', ?))`, mine[k].id, s.uid, st, 0, `-${Math.floor(R() * 60)} days`);
-        if (a.changes) {
-          run("INSERT INTO application_events(application_id,status,note) VALUES(?, 'applied', 'Application submitted')", a.lastInsertRowid);
-          if (st !== 'applied') run('INSERT INTO application_events(application_id,status,note) VALUES(?,?,NULL)', a.lastInsertRowid, st);
-        }
-      }
-      for (const g of mine) run("INSERT INTO activity_events(user_id,role,event,job_id,created_at) VALUES(?, 'seeker', 'view_job', ?, datetime('now', ?))", s.uid, g.id, `-${Math.floor(R() * 20)} days`);
-      const other = genJobs[Math.floor(R() * genJobs.length)];
-      run("INSERT INTO activity_events(user_id,role,event,job_id) VALUES(?, 'seeker', 'view_job', ?)", s.uid, other.id);
-      if (R() < 0.5) run('INSERT OR IGNORE INTO saved_jobs(user_id,job_id) VALUES(?,?)', s.uid, mine[mine.length - 1].id);
-    });
-
-
     // portals
     const pu = user('portal', 'Naukri Integration Team', 'api@naukri-demo.in', '9000000201', 'Portal@123');
     run("INSERT INTO portals(name,slug,owner_user_id,adapter,rate_limit_per_min,status) VALUES('Naukri (demo feed)','naukri-demo',?,'naukri',120,'active')", pu);
@@ -258,6 +204,117 @@ function seed() {
      ['Can I hide my profile from employers?', 'Yes. In your profile choose Private. Private profiles never appear in employer searches or recommendations.', 'Privacy', 'profile'],
      ['How do I connect my job portal?', 'Register as a Job Portal, wait for approval, create an API key and push jobs to /api/v1/portal/jobs. Full API docs are at /api/docs.', 'Integrations', 'portal']]
       .forEach(([q, a, c, ctx]) => run('INSERT INTO faqs(question,answer,category,context) VALUES(?,?,?,?)', q, a, c, ctx || null));
+
+    // ---------- Generated volume (runs after portals so some jobs can be portal-sourced) ----------
+    const R = rng(42);
+    const pick = (a) => a[Math.floor(R() * a.length)];
+    const tax = require('../services/taxonomy');
+    const CITY_LIST = Object.keys(tax.CITIES);
+    const portalRows = PORTALS_FOR_JOBS.map((slug) => one('SELECT id, slug, name FROM portals WHERE slug=?', slug)).filter(Boolean);
+    const bySector = (sec) => companyIds.filter((_, i) => COMPANIES[i][1] === sec);
+    const genJobs = [];
+    const roleIdx = new Map(ROLES.map((r, i) => [r[0], i]));
+    CITY_LIST.forEach((city, ci) => {
+      const roles = ROLES.map((r, ri) => ri).filter((ri) => CORE_ROLES.includes(ROLES[ri][0]) || ROLES[ri][0] === HIGH_PAY_ROLES[ci % HIGH_PAY_ROLES.length] || (ri + ci) % 3 === 0);
+      for (const ri of roles) {
+        const [title, sector, req, nice, edu, emin, cmin, cmax, ct0, wf0] = ROLES[ri];
+        const pool = bySector(sector).length ? bySector(sector) : companyIds;
+        const c = pool[(ci + ri) % pool.length];
+        const company = COMPANIES[companyIds.indexOf(c)][0];
+        // Vary type, format, pay, experience and freshness so every filter has hits in every city.
+        let ct = ct0; const roll = HIGH_PAY_ROLES.includes(title) ? 1 : R();
+        if (roll < 0.1 && edu >= 4) ct = 'internship'; else if (roll < 0.18) ct = 'part_time'; else if (roll < 0.24) ct = 'contract';
+        let wf = wf0; const w = R();
+        if (sector === 'IT & Software' || sector === 'Marketing' || sector === 'Design & Media') wf = w < 0.3 ? 'remote' : w < 0.65 ? 'hybrid' : 'onsite';
+        else if (w < 0.08 && ['Data Entry Operator', 'Telecaller', 'Customer Support Executive', 'Content Writer', 'Online Tutor'].includes(title)) wf = 'remote';
+        else if (w < 0.15) wf = 'hybrid';
+        const metro = ['Bengaluru', 'Mumbai', 'Delhi', 'Gurugram', 'Hyderabad', 'Pune', 'Chennai', 'Noida'].includes(city);
+        const pay = (metro ? 1.15 : 0.95) * (0.9 + R() * 0.25) * (ct === 'internship' ? 0.45 : ct === 'part_time' ? 0.6 : 1);
+        const exp = ct === 'internship' ? 0 : Math.max(0, emin + (R() < 0.25 ? -1 : R() < 0.2 ? 1 : 0));
+        const daysAgo = R() < 0.1 ? 0 : R() < 0.35 ? Math.floor(R() * 7) : Math.floor(R() * 40);
+        const fromPortal = R() < 0.15 && portalRows.length ? portalRows[(ci + ri) % portalRows.length] : null;
+        const jt = ct === 'internship' && !/intern/i.test(title) ? `${title} Intern` : title;
+        const desc = `${company} is hiring a ${jt} in ${city}. You will work with a friendly team, get on-the-job training and grow with us. Required: ${req.join(', ')}.${nice.length ? ` Good to have: ${nice.join(', ')}.` : ''} ${exp ? `${exp}+ years of experience preferred.` : 'Freshers are welcome to apply.'}`;
+        const j = run(`INSERT INTO jobs(company_id,posted_by,portal_id,external_id,source,external_company,title,description,sector,contract_type,work_format,city,state,ctc_min,ctc_max,experience_min,education_level,openings,deadline,status,published_at,created_at)
+                       VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,'active',datetime('now', ?),datetime('now', ?))`,
+          fromPortal ? null : c.id, fromPortal ? null : c.uid, fromPortal?.id || null, fromPortal ? `${fromPortal.slug.toUpperCase()}-${ci}-${ri}` : null, fromPortal ? `portal:${fromPortal.slug}` : 'direct', fromPortal ? company : null,
+          jt, desc, sector, ct, wf, city, tax.stateOf(city), Math.round((cmin * pay) / 1000) * 1000, Math.round((cmax * pay) / 1000) * 1000, exp, edu, 1 + Math.floor(R() * 10), deadline, `-${daysAgo} days`, `-${daysAgo} days`);
+        const jid = Number(j.lastInsertRowid);
+        req.forEach((x) => run('INSERT OR IGNORE INTO job_skills(job_id,skill_id,required) VALUES(?,?,1)', jid, sid(x)));
+        nice.forEach((x) => run('INSERT OR IGNORE INTO job_skills(job_id,skill_id,required) VALUES(?,?,0)', jid, sid(x)));
+        run("INSERT INTO job_status_history(job_id,from_status,to_status,actor_id,reason) VALUES(?,NULL,'active',?,?)", jid, fromPortal ? null : c.uid, fromPortal ? `Synced from ${fromPortal.name}` : 'Published');
+        genJobs.push({ id: jid, role: ri, city });
+      }
+    });
+
+
+    // Coverage pass: guarantee every city has at least one job for each filter value.
+    const NEED = [
+      ['contract_type', 'internship'], ['contract_type', 'contract'], ['contract_type', 'part_time'],
+      ['work_format', 'remote'], ['work_format', 'hybrid'],
+    ];
+    for (const city of CITY_LIST) {
+      const used = new Set();
+      for (const [col, val] of NEED) {
+        if (one(`SELECT 1 FROM jobs WHERE city=? AND ${col}=?`, city, val)) continue;
+        const cand = db.prepare(`SELECT id, title, ctc_min, ctc_max FROM jobs WHERE city=? AND contract_type='full_time' AND work_format='onsite' ORDER BY id`).all(city).find((x) => !used.has(x.id) && (x.ctc_max || 0) < 1000000
+          && (val !== 'remote' || /Support|Data Entry|Telecaller|Developer|Writer|Analyst|Tutor/.test(x.title)));
+        if (!cand) continue; used.add(cand.id);
+        if (val === 'internship') run("UPDATE jobs SET contract_type='internship', title=title || ' Intern', experience_min=0, ctc_min=ROUND(ctc_min*0.5,-3), ctc_max=ROUND(ctc_max*0.5,-3) WHERE id=?", cand.id);
+        else if (val === 'part_time') run("UPDATE jobs SET contract_type='part_time', ctc_min=ROUND(ctc_min*0.6,-3), ctc_max=ROUND(ctc_max*0.6,-3) WHERE id=?", cand.id);
+        else run(`UPDATE jobs SET ${col}=? WHERE id=?`, val, cand.id);
+      }
+      if (!one("SELECT 1 FROM jobs WHERE city=? AND published_at >= datetime('now','-1 day')", city)) run("UPDATE jobs SET published_at=datetime('now','-2 hours'), created_at=datetime('now','-2 hours') WHERE id=(SELECT id FROM jobs WHERE city=? ORDER BY id DESC LIMIT 1)", city);
+      if (portalRows.length && !one("SELECT 1 FROM jobs WHERE city=? AND source<>'direct'", city)) {
+        const p = portalRows[CITY_LIST.indexOf(city) % portalRows.length];
+        const j = one("SELECT id, company_id FROM jobs WHERE city=? AND source='direct' AND id > ? ORDER BY id LIMIT 1", city, 15);
+        if (j) run("UPDATE jobs SET portal_id=?, source=?, external_id=?, external_company=(SELECT name FROM companies WHERE id=?), company_id=NULL, posted_by=NULL WHERE id=?", p.id, `portal:${p.slug}`, `${p.slug.toUpperCase()}-FILL-${j.id}`, j.company_id, j.id);
+      }
+    }
+
+    // Generated candidates: each is built around a role, living in a city where that role is hiring.
+    const genSeekers = [];
+    for (let n = 0; n < 240; n++) {
+      const ri = n % ROLES.length; const [title, sector, req, nice, edu, emin, cmin] = ROLES[ri];
+      const name = `${FIRST[(n * 3) % FIRST.length]} ${LAST[(n * 7 + Math.floor(n / FIRST.length)) % LAST.length]}`;
+      const email = `${name.toLowerCase().replace(/\s+/g, '.')}${n}@example.in`;
+      const phone = `9${String(700000000 + n * 1337).padStart(9, '0')}`;
+      const uid = user('seeker', name, email, phone, 'Seeker@123');
+      const jobsForRole = genJobs.filter((g) => g.role === ri);
+      const homeCity = jobsForRole.length ? jobsForRole[(n * 5) % jobsForRole.length].city : pick(CITY_LIST);
+      const exp = Math.max(0, emin + Math.floor(R() * 3) - (R() < 0.3 ? 1 : 0));
+      const skills = [...new Set([...req.filter(() => R() > 0.12), ...nice.filter(() => R() > 0.45), ...(R() > 0.5 ? ['Communication'] : []), ...(R() > 0.4 ? ['English'] : [])])];
+      if (!skills.length) skills.push(req[0]);
+      const prefs = R() < 0.35 ? [homeCity, 'Anywhere'] : [homeCity];
+      const vis = R() < 0.25 ? 'public' : R() < 0.05 ? 'private' : 'employers';
+      const eduLevel = Math.max(1, edu + (R() < 0.2 ? 1 : 0) - (R() < 0.12 ? 1 : 0));
+      run(`INSERT INTO seeker_profiles(user_id,slug,headline,about,city,state,education_level,experience_years,expected_ctc_min,preferred_locations,languages,visibility,profile_level,ekyc_verified,digilocker_verified)
+           VALUES(?,?,?,?,?,?,?,?,?,?,?,?,2,?,?)`, uid, `${name.toLowerCase().replace(/\s+/g, '-')}-${uid}`, exp ? `${title} with ${exp} yrs experience` : `Aspiring ${title}`,
+        `${exp ? `${exp} years` : 'Fresher'} looking for ${title.toLowerCase()} roles in ${homeCity}.`, homeCity, tax.stateOf(homeCity), eduLevel, exp, Math.round(cmin * (0.85 + R() * 0.25)),
+        JSON.stringify(prefs), JSON.stringify(['English', 'Hindi'].slice(0, 1 + (n % 2))), vis, R() < 0.4 ? 1 : 0, R() < 0.5 ? 1 : 0);
+      skills.forEach((x) => run('INSERT OR IGNORE INTO seeker_skills(user_id,skill_id,level) VALUES(?,?,?)', uid, sid(x), pick(['beginner', 'intermediate', 'intermediate', 'expert'])));
+      run('INSERT INTO educations(user_id,qualification,level,institution,year,verified) VALUES(?,?,?,?,?,?)', uid, eduLevel >= 5 ? (QUAL_BY_SECTOR[sector] || QUAL[5]) : QUAL[eduLevel] || '12th', eduLevel, `${homeCity} ${eduLevel >= 5 ? 'College' : 'Institute'}`, 2025 - exp - (eduLevel >= 5 ? 0 : 1), R() < 0.5 ? 1 : 0);
+      if (exp) run('INSERT INTO experiences(user_id,title,company,start_date,current) VALUES(?,?,?,?,1)', uid, title, `${pick(LAST)} Enterprises`, `${2026 - exp}-06-01`);
+      genSeekers.push({ uid, role: ri, city: homeCity });
+    }
+
+    // Applications and behaviour so dashboards, funnels and collaborative filtering have signal.
+    const stages = ['applied', 'applied', 'shortlisted', 'interview', 'offered', 'hired', 'rejected'];
+    genSeekers.forEach((s, i) => {
+      const mine = genJobs.filter((g) => g.role === s.role).sort((a, b) => (b.city === s.city) - (a.city === s.city));
+      const n = 1 + (i % 3);
+      for (let k = 0; k < Math.min(n, mine.length); k++) {
+        const st = stages[(i + k) % stages.length];
+        const a = run(`INSERT OR IGNORE INTO applications(job_id,seeker_id,status,match_score,created_at) VALUES(?,?,?,?,datetime('now', ?))`, mine[k].id, s.uid, st, 0, `-${Math.floor(R() * 90)} days`);
+        if (a.changes) {
+          run("INSERT INTO application_events(application_id,status,note) VALUES(?, 'applied', 'Application submitted')", a.lastInsertRowid);
+          if (st !== 'applied') run('INSERT INTO application_events(application_id,status,note) VALUES(?,?,NULL)', a.lastInsertRowid, st);
+        }
+      }
+      for (const g of mine.slice(0, 6)) run("INSERT INTO activity_events(user_id,role,event,job_id,created_at) VALUES(?, 'seeker', 'view_job', ?, datetime('now', ?))", s.uid, g.id, `-${Math.floor(R() * 20)} days`);
+      run("INSERT INTO activity_events(user_id,role,event,job_id) VALUES(?, 'seeker', 'view_job', ?)", s.uid, pick(genJobs).id);
+      if (R() < 0.5 && mine.length) run('INSERT OR IGNORE INTO saved_jobs(user_id,job_id) VALUES(?,?)', s.uid, mine[mine.length - 1].id);
+    });
   });
   tx();
   // Score every seeded application with the real matching engine so analytics reflect the AI.
